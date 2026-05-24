@@ -1,0 +1,6 @@
+# Cloudflare Workers / Pages environment variables
+# Copy to .dev.vars for local wrangler dev
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+GEMINI_API_KEY=your-gemini-api-key
+SEED_SECRET=your-secret-seed-key

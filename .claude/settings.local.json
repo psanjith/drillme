@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(mkdir -p /Users/prakul/drillme/app/login /Users/prakul/drillme/app/signup /Users/prakul/drillme/app/onboarding /Users/prakul/drillme/app/dashboard /Users/prakul/drillme/app/interview/setup \"/Users/prakul/drillme/app/interview/[id]\" \"/Users/prakul/drillme/app/debrief/[id]\" /Users/prakul/drillme/app/weakness /Users/prakul/drillme/app/drill /Users/prakul/drillme/app/speaking /Users/prakul/drillme/components/ui /Users/prakul/drillme/components/interview /Users/prakul/drillme/components/speaking /Users/prakul/drillme/components/dashboard /Users/prakul/drillme/app/api/auth/onboarding /Users/prakul/drillme/app/api/sessions/create \"/Users/prakul/drillme/app/api/sessions/[id]/start\" \"/Users/prakul/drillme/app/api/sessions/[id]/answer\" \"/Users/prakul/drillme/app/api/sessions/[id]/help\" \"/Users/prakul/drillme/app/api/sessions/[id]/complete\" \"/Users/prakul/drillme/app/api/sessions/[id]/debrief\" /Users/prakul/drillme/app/api/sessions /Users/prakul/drillme/app/api/weakness-profile /Users/prakul/drillme/app/api/drill/start /Users/prakul/drillme/app/api/dashboard /Users/prakul/drillme/app/api/speaking/start \"/Users/prakul/drillme/app/api/speaking/[id]/submit\" \"/Users/prakul/drillme/app/api/speaking/[id]/feedback\" /Users/prakul/drillme/app/api/speaking/history /Users/prakul/drillme/app/api/speaking/profile /Users/prakul/drillme/data)"
+    ],
+    "additionalDirectories": [
+      "/Users/prakul/drillme/app/interview"
+    ]
+  }
+}

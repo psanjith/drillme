@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DrillMe — AI Interview & Speaking Coach
 
-## Getting Started
+AI-powered interview prep and speaking coach. Practice with realistic AI panellists, get instant structured feedback, track your weaknesses cross-session, and improve your speaking with coach Alex.
 
-First, run the development server:
+**Total running cost: $0**
+
+## Stack
+
+- **Framework**: Next.js 14+ (App Router, fullstack)
+- **AI**: Google Gemini 2.0 Flash (free — aistudio.google.com)
+- **Database/Auth**: Supabase (free tier)
+- **Voice**: Web Speech API (browser-native, free)
+- **Styling**: Tailwind CSS
+- **Deployment**: Cloudflare Pages (free tier)
+
+## Setup
+
+### 1. Supabase
+
+1. Create a project at [supabase.com](https://supabase.com)
+2. Run the SQL in `data/schema.sql` in the SQL editor
+3. Copy your project URL and anon key
+
+### 2. Gemini API Key
+
+Get a free API key at [aistudio.google.com](https://aistudio.google.com)
+
+### 3. Environment Variables
+
+```bash
+cp .env.local.example .env.local
+# Fill in NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, GEMINI_API_KEY
+```
+
+### 4. Seed Questions
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Visit: http://localhost:3000/api/seed?secret=your-secret-seed-key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 5. Run Locally
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Cloudflare Pages Deployment
 
-## Learn More
+1. Push to GitHub
+2. Connect repo in Cloudflare Pages dashboard
+3. Build command: `npx @cloudflare/next-on-pages`
+4. Output directory: `.vercel/output/static`
+5. Set environment variables in Pages dashboard → Settings → Environment Variables
+6. Enable `nodejs_compat` compatibility flag
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Interview Setup**: Paste a JD or quick configure. Gemini extracts company, role, and requirements.
+- **Interview Room**: 3 AI panellists with distinct voices and personas. Real-time voice input, silent background evaluation, follow-up questions, help system.
+- **Debrief**: Per-question scoring (4 dimensions), specific feedback, optimal frameworks.
+- **Weakness Tracking**: Cross-session weakness profile with severity scores and trends.
+- **Drill Mode**: Targeted 10-15 minute sessions attacking your highest-severity weaknesses.
+- **Speaking Practice**: 5 session types with coach Alex. Filler word detection, annotated transcripts, clarity/structure scoring.
+- **Dashboard**: Readiness score over time, weakness heatmap, AI focus recommendations.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Question Bank
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+150+ manually curated questions tagged by company, role level, topic, and frequency:
+- 40 behavioural (conflict, leadership, failure, communication)
+- 40 DSA (arrays, strings, trees, graphs, DP, sorting)
+- 30 system design (URL shortener, rate limiter, news feed, etc.)
+- 20 technical (databases, APIs, OOP, networking, security)
+- 20 company & motivation
