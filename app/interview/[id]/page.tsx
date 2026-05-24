@@ -51,8 +51,11 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+
     async function init() {
       await loadVoices();
+      if (cancelled) return;
 
       const manager = new SpeechRecognitionManager({
         onTranscript: (text) => setTranscript(text),
@@ -70,10 +73,13 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
         const res = await fetch(`/api/sessions/${id}/start`, { method: "POST" });
         data = await res.json();
       } catch {
+        if (cancelled) return;
         setError("Network error — could not reach the server. Check your connection and try again.");
         setState("error" as InterviewState);
         return;
       }
+
+      if (cancelled) return;
 
       if (data.error) {
         setError(data.error);
@@ -89,18 +95,22 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
 
       const intro = `Welcome to your ${data.session.duration_minutes}-minute ${data.session.interview_type} interview. I'm your panel today. Let's get started.`;
       setState("intro");
-      speakQuestion(intro, panellists[0] || "senior_engineer");
-
-      introTimeoutRef.current = setTimeout(() => {
-        setState("question");
-        speakQuestion(data.question.question_text, data.question.panellist_persona);
-        startTimeRef.current = new Date();
-        timerRef.current = setInterval(() => {
-          if (startTimeRef.current) {
-            setElapsed(Math.floor((Date.now() - startTimeRef.current.getTime()) / 1000));
-          }
-        }, 1000);
-      }, 3000);
+      setIsSpeaking(true);
+      speak(intro, panellists[0] || "senior_engineer", () => {
+        if (cancelled) return;
+        setIsSpeaking(false);
+        introTimeoutRef.current = setTimeout(() => {
+          if (cancelled) return;
+          setState("question");
+          speakQuestion(data.question.question_text, data.question.panellist_persona);
+          startTimeRef.current = new Date();
+          timerRef.current = setInterval(() => {
+            if (startTimeRef.current) {
+              setElapsed(Math.floor((Date.now() - startTimeRef.current.getTime()) / 1000));
+            }
+          }, 1000);
+        }, 500);
+      });
     }
 
     init().catch((err) => {
@@ -109,6 +119,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
     });
 
     return () => {
+      cancelled = true;
       stopSpeaking();
       if (timerRef.current) clearInterval(timerRef.current);
       if (introTimeoutRef.current) clearTimeout(introTimeoutRef.current);
