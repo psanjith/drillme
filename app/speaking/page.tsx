@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AppShell } from "@/components/AppShell";
+import { ProGate } from "@/components/ProGate";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -187,6 +188,7 @@ export default function SpeakingPage() {
 
   return (
     <AppShell>
+      <ProGate feature="Speaking Coach">
       <div className="max-w-2xl mx-auto px-6 py-8">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 bg-teal-500/20 rounded-xl flex items-center justify-center">
@@ -406,6 +408,7 @@ export default function SpeakingPage() {
           </div>
         )}
       </div>
+      </ProGate>
     </AppShell>
   );
 }

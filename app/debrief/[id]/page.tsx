@@ -6,7 +6,8 @@ import { AppShell } from "@/components/AppShell";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { PanellistAvatar } from "@/components/interview/PanellistAvatar";
-import { ChevronDown, ChevronRight, Star } from "lucide-react";
+import { ChevronDown, ChevronRight, Star, Lock } from "lucide-react";
+import Link from "next/link";
 import type { Session, SessionQuestion, PanellistPersona } from "@/types";
 
 function ScoreBar({ label, score }: { label: string; score: number }) {
@@ -24,7 +25,7 @@ function ScoreBar({ label, score }: { label: string; score: number }) {
   );
 }
 
-function QuestionAccordion({ question, index }: { question: SessionQuestion; index: number }) {
+function QuestionAccordion({ question, index, isPro }: { question: SessionQuestion; index: number; isPro: boolean }) {
   const [open, setOpen] = useState(index === 0);
   const avgScore = question.scores
     ? Object.values(question.scores).reduce((a, b) => a + b, 0) / 4
@@ -57,7 +58,14 @@ function QuestionAccordion({ question, index }: { question: SessionQuestion; ind
       </button>
 
       {open && (
-        <div className="border-t border-[#2a3040] px-5 py-5 space-y-5">
+        <div className="border-t border-[#2a3040] px-5 py-5 space-y-5 relative">
+          {!isPro && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#1a1f2e]/80 backdrop-blur-sm rounded-b-xl">
+              <Lock size={18} className="text-blue-400 mb-2" />
+              <p className="text-white text-sm font-medium mb-1">Detailed feedback is a Pro feature</p>
+              <Link href="/upgrade" className="text-blue-400 hover:text-blue-300 text-xs underline">Upgrade to unlock →</Link>
+            </div>
+          )}
           {question.user_answer_transcript && (
             <div>
               <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">Your answer</p>
@@ -129,6 +137,7 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
   const { id } = use(params);
   const [session, setSession] = useState<Session | null>(null);
   const [questions, setQuestions] = useState<SessionQuestion[]>([]);
+  const [isPro, setIsPro] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -137,6 +146,7 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
       .then((data) => {
         setSession(data.session);
         setQuestions(data.questions || []);
+        setIsPro(data.isPro ?? false);
         setLoading(false);
       });
   }, [id]);
@@ -199,9 +209,15 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
 
         <div className="mb-8">
           <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-4">Questions & Feedback</h2>
+          {!isPro && (
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-3 mb-4 flex items-center justify-between">
+              <p className="text-blue-300 text-sm">Upgrade to Pro to unlock full per-question feedback & scores.</p>
+              <Link href="/upgrade" className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors flex-shrink-0 ml-4">Upgrade</Link>
+            </div>
+          )}
           <div className="space-y-3">
             {questions.map((q, i) => (
-              <QuestionAccordion key={q.id} question={q} index={i} />
+              <QuestionAccordion key={q.id} question={q} index={i} isPro={isPro} />
             ))}
           </div>
         </div>

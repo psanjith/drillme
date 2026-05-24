@@ -16,6 +16,9 @@ export interface Profile {
   target_companies: string[];
   weekly_goal: number;
   created_at: string;
+  stripe_customer_id: string | null;
+  subscription_status: "free" | "pro";
+  subscription_period_end: string | null;
 }
 
 export interface OptimalFramework {

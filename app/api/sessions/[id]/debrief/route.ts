@@ -1,6 +1,7 @@
 
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { getSubscription } from "@/lib/subscription";
 
 export async function GET(
   _request: Request,
@@ -20,13 +21,16 @@ export async function GET(
       .single();
     if (!session) return NextResponse.json({ error: "Session not found" }, { status: 404 });
 
-    const { data: questions } = await supabase
-      .from("session_questions")
-      .select("*")
-      .eq("session_id", id)
-      .order("order_index");
+    const [{ data: questions }, { isPro }] = await Promise.all([
+      supabase
+        .from("session_questions")
+        .select("*")
+        .eq("session_id", id)
+        .order("order_index"),
+      getSubscription(supabase, user.id),
+    ]);
 
-    return NextResponse.json({ session, questions: questions || [] });
+    return NextResponse.json({ session, questions: questions || [], isPro });
   } catch (err) {
     console.error("Debrief fetch error:", err);
     return NextResponse.json({ error: "Failed to fetch debrief" }, { status: 500 });

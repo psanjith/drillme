@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
+import { ProGate } from "@/components/ProGate";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -63,6 +64,7 @@ export default function WeaknessPage() {
 
   return (
     <AppShell>
+      <ProGate feature="Weakness Profile">
       <div className="max-w-3xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -163,6 +165,7 @@ export default function WeaknessPage() {
           </div>
         )}
       </div>
+      </ProGate>
     </AppShell>
   );
 }

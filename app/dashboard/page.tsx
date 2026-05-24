@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
+import { ProGate } from "@/components/ProGate";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -52,6 +53,7 @@ export default function DashboardPage() {
 
   return (
     <AppShell>
+      <ProGate feature="Dashboard">
       <div className="px-6 py-8 max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-white">Dashboard</h1>
@@ -234,6 +236,7 @@ export default function DashboardPage() {
           </Card>
         </div>
       </div>
+      </ProGate>
     </AppShell>
   );
 }

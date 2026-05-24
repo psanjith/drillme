@@ -83,6 +83,10 @@ export default function InterviewSetupPage() {
         }),
       });
       const data = await res.json();
+      if (data.error === "free_limit_reached") {
+        router.push("/upgrade");
+        return;
+      }
       if (data.error) throw new Error(data.error);
       router.push(`/interview/${data.session.id}`);
     } catch (err) {

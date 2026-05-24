@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 import { AppShell } from "@/components/AppShell";
+import { ProGate } from "@/components/ProGate";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { PanellistAvatar } from "@/components/interview/PanellistAvatar";
@@ -113,6 +114,7 @@ export default function DrillPage() {
 
   return (
     <AppShell>
+      <ProGate feature="Drill Mode">
       <div className="max-w-2xl mx-auto px-6 py-8">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-white mb-1">Drill Mode</h1>
@@ -259,6 +261,7 @@ export default function DrillPage() {
           </div>
         )}
       </div>
+      </ProGate>
     </AppShell>
   );
 }

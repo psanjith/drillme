@@ -11,6 +11,7 @@ import {
   MessageSquare,
   Briefcase,
   LogOut,
+  Crown,
 } from "lucide-react";
 
 const navItems = [
@@ -64,7 +65,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           })}
         </nav>
 
-        <div className="px-3 py-4 border-t border-[#2a3040]">
+        <div className="px-3 py-4 border-t border-[#2a3040] flex flex-col gap-1">
+          <Link
+            href="/upgrade"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-amber-400 hover:text-amber-300 hover:bg-amber-400/5 transition-all"
+          >
+            <Crown size={16} />
+            Upgrade to Pro
+          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:text-slate-300 hover:bg-white/5 w-full transition-all"
