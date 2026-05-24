@@ -41,7 +41,9 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
 
   const recognitionRef = useRef<SpeechRecognitionManager | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const introTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startTimeRef = useRef<Date | null>(null);
+  const submittingRef = useRef(false);
 
   const speakQuestion = useCallback((text: string, persona: PanellistPersona) => {
     setIsSpeaking(true);
@@ -89,7 +91,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
       setState("intro");
       speakQuestion(intro, panellists[0] || "senior_engineer");
 
-      setTimeout(() => {
+      introTimeoutRef.current = setTimeout(() => {
         setState("question");
         speakQuestion(data.question.question_text, data.question.panellist_persona);
         startTimeRef.current = new Date();
@@ -109,6 +111,8 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
     return () => {
       stopSpeaking();
       if (timerRef.current) clearInterval(timerRef.current);
+      if (introTimeoutRef.current) clearTimeout(introTimeoutRef.current);
+      recognitionRef.current?.stop();
     };
   }, [id, speakQuestion]);
 
@@ -123,6 +127,9 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
 
   async function stopRecording() {
     if (!recognitionRef.current || !currentQuestion) return;
+    if (submittingRef.current) return;
+    submittingRef.current = true;
+    recognitionRef.current.stop();
     setIsRecording(false);
     setState("processing");
 
@@ -140,10 +147,13 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
       const data = await res.json();
 
       if (data.error) {
+        submittingRef.current = false;
         setState("question");
         setError(data.error);
         return;
       }
+
+      submittingRef.current = false;
 
       if (data.sessionOver) {
         setSessionOver(true);
@@ -162,6 +172,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
         setState("complete");
       }
     } catch {
+      submittingRef.current = false;
       setState("question");
       setError("Failed to submit answer. Please try again.");
     }
@@ -169,6 +180,11 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
 
   async function handleHelp() {
     if (!currentQuestion) return;
+    stopSpeaking();
+    if (isRecording && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsRecording(false);
+    }
     const res = await fetch(`/api/sessions/${id}/help`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -177,11 +193,6 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
     const data = await res.json();
     setHelpPanel(data.framework);
     setHelpOpen(true);
-    stopSpeaking();
-    if (isRecording && recognitionRef.current) {
-      recognitionRef.current.stop();
-      setIsRecording(false);
-    }
   }
 
   async function handleComplete() {
@@ -266,10 +277,10 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
           <button
             onClick={() => {
               stopSpeaking();
-              if (isRecording && recognitionRef.current) {
-                recognitionRef.current.stop();
-                setIsRecording(false);
-              }
+              if (timerRef.current) clearInterval(timerRef.current);
+              if (introTimeoutRef.current) clearTimeout(introTimeoutRef.current);
+              recognitionRef.current?.stop();
+              setIsRecording(false);
               setSessionOver(true);
             }}
             className="text-slate-500 hover:text-red-400 text-xs border border-[#2a3040] hover:border-red-500/40 px-3 py-1.5 rounded-lg transition-colors"
