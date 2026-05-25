@@ -46,7 +46,7 @@ export function PanellistAvatar({ persona, speaking = false, size = "md" }: Pane
       </div>
       {size !== "sm" && (
         <div>
-          <p className="text-white text-sm font-medium leading-tight">{config.label}</p>
+          <p className="text-foreground text-sm font-medium leading-tight">{config.label}</p>
           {speaking && <p className="text-green-400 text-xs">Speaking...</p>}
           {!speaking && <p className="text-slate-500 text-xs">{config.desc}</p>}
         </div>

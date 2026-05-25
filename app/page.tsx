@@ -1,15 +1,17 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0f1117] flex flex-col">
-      <nav className="border-b border-[#2a3040] px-6 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-[var(--background)] flex flex-col">
+      <nav className="border-b border-[var(--card-border)] px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <img src="/logo.png" alt="DrillMe" className="w-8 h-8 rounded object-contain" />
-          <span className="text-white font-semibold text-lg">DrillMe</span>
+          <span className="text-foreground font-semibold text-lg">DrillMe</span>
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/login" className="text-slate-400 hover:text-white text-sm transition-colors">Sign in</Link>
+          <ThemeToggle />
+          <Link href="/login" className="text-slate-400 hover:text-foreground text-sm transition-colors">Sign in</Link>
           <Link href="/signup" className="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">Get started</Link>
         </div>
       </nav>
@@ -18,7 +20,7 @@ export default function LandingPage() {
         <div className="max-w-3xl mx-auto">
           <p className="text-slate-500 text-xs font-semibold tracking-[0.25em] uppercase mb-8">Prep · Perform · Peak</p>
 
-          <h1 className="text-5xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-5xl font-bold text-foreground mb-6 leading-tight">
             Interview prep that
             <span className="text-blue-400"> actually works</span>
           </h1>
@@ -32,7 +34,7 @@ export default function LandingPage() {
             <Link href="/signup" className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-8 py-3.5 rounded-lg transition-colors text-base">
               Start for free
             </Link>
-            <Link href="/login" className="bg-transparent border border-[#2a3040] hover:border-slate-500 text-slate-300 font-medium px-8 py-3.5 rounded-lg transition-colors text-base">
+            <Link href="/login" className="bg-transparent border border-[var(--card-border)] hover:border-slate-500 text-slate-300 font-medium px-8 py-3.5 rounded-lg transition-colors text-base">
               Sign in
             </Link>
           </div>
@@ -44,8 +46,8 @@ export default function LandingPage() {
               { label: "Weakness Tracking", desc: "Cross-session progress" },
               { label: "Speaking Coach", desc: "5 session types" },
             ].map((f) => (
-              <div key={f.label} className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-4 text-left">
-                <p className="text-white font-medium text-sm mb-1">{f.label}</p>
+              <div key={f.label} className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-4 text-left">
+                <p className="text-foreground font-medium text-sm mb-1">{f.label}</p>
                 <p className="text-slate-500 text-xs">{f.desc}</p>
               </div>
             ))}
@@ -53,7 +55,7 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <footer className="border-t border-[#2a3040] px-6 py-4 text-center text-slate-600 text-xs tracking-wide">
+      <footer className="border-t border-[var(--card-border)] px-6 py-4 text-center text-slate-600 text-xs tracking-wide">
         Built for the offer. Not the algorithm.
       </footer>
     </div>

@@ -99,11 +99,11 @@ export default function InterviewSetupPage() {
     <AppShell>
       <div className="max-w-2xl mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white mb-1">Start an interview</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-1">Start an interview</h1>
           <p className="text-slate-400 text-sm">Configure your practice session</p>
         </div>
 
-        <div className="flex gap-2 mb-6 bg-[#1a1f2e] border border-[#2a3040] rounded-lg p-1">
+        <div className="flex gap-2 mb-6 bg-[var(--card)] border border-[var(--card-border)] rounded-lg p-1">
           {(["jd", "quick"] as const).map((m) => (
             <button
               key={m}
@@ -120,7 +120,7 @@ export default function InterviewSetupPage() {
         </div>
 
         {mode === "jd" ? (
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5 mb-5">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5 mb-5">
             <Textarea
               label="Job Description"
               placeholder="Paste the full job description here. We'll extract the company, role, and requirements automatically..."
@@ -130,7 +130,7 @@ export default function InterviewSetupPage() {
             />
           </div>
         ) : (
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5 mb-5 space-y-5">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5 mb-5 space-y-5">
             <div>
               <label className="text-sm font-medium text-slate-300 block mb-2">Company (optional)</label>
               <div className="flex flex-wrap gap-2">
@@ -141,7 +141,7 @@ export default function InterviewSetupPage() {
                     className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
                       form.company === c
                         ? "border-blue-500 bg-blue-500/15 text-blue-300"
-                        : "border-[#2a3040] text-slate-400 hover:border-slate-500"
+                        : "border-[var(--card-border)] text-slate-400 hover:border-slate-500"
                     }`}
                   >
                     {c}
@@ -153,7 +153,7 @@ export default function InterviewSetupPage() {
         )}
 
         <div className="grid grid-cols-1 gap-4 mb-6">
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
             <label className="text-sm font-medium text-slate-300 block mb-3">Experience Level</label>
             <div className="flex gap-2">
               {LEVELS.map((l) => (
@@ -162,8 +162,8 @@ export default function InterviewSetupPage() {
                   onClick={() => setForm((f) => ({ ...f, role_level: l.value }))}
                   className={`flex-1 py-2 rounded-lg border text-sm transition-all ${
                     form.role_level === l.value
-                      ? "border-blue-500 bg-blue-500/10 text-white font-medium"
-                      : "border-[#2a3040] text-slate-400 hover:border-slate-500"
+                      ? "border-blue-500 bg-blue-500/10 text-foreground font-medium"
+                      : "border-[var(--card-border)] text-slate-400 hover:border-slate-500"
                   }`}
                 >
                   {l.label}
@@ -172,7 +172,7 @@ export default function InterviewSetupPage() {
             </div>
           </div>
 
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
             <label className="text-sm font-medium text-slate-300 block mb-3">Interview Type</label>
             <div className="flex gap-2">
               {TYPES.map((t) => (
@@ -182,17 +182,17 @@ export default function InterviewSetupPage() {
                   className={`flex-1 py-3 rounded-lg border text-left px-3 transition-all ${
                     form.interview_type === t.value
                       ? "border-blue-500 bg-blue-500/10"
-                      : "border-[#2a3040] hover:border-slate-500"
+                      : "border-[var(--card-border)] hover:border-slate-500"
                   }`}
                 >
-                  <p className={`text-sm font-medium ${form.interview_type === t.value ? "text-white" : "text-slate-300"}`}>{t.label}</p>
+                  <p className={`text-sm font-medium ${form.interview_type === t.value ? "text-foreground" : "text-slate-300"}`}>{t.label}</p>
                   <p className="text-xs text-slate-500 mt-0.5">{t.desc}</p>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
             <label className="text-sm font-medium text-slate-300 block mb-3">Panel ({form.panel_config.panellists.length} panellists)</label>
             <div className="flex flex-col gap-2">
               {PANELLISTS.map((p) => {
@@ -202,14 +202,14 @@ export default function InterviewSetupPage() {
                     key={p.value}
                     onClick={() => togglePanellist(p.value)}
                     className={`flex items-center gap-3 p-3 rounded-lg border text-left transition-all ${
-                      active ? "border-blue-500 bg-blue-500/10" : "border-[#2a3040] hover:border-slate-500"
+                      active ? "border-blue-500 bg-blue-500/10" : "border-[var(--card-border)] hover:border-slate-500"
                     }`}
                   >
                     <div className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${active ? "bg-blue-500 border-blue-500" : "border-slate-600"}`}>
-                      {active && <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                      {active && <svg className="w-2.5 h-2.5 text-foreground" fill="none" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
                     </div>
                     <div>
-                      <p className={`text-sm font-medium ${active ? "text-white" : "text-slate-300"}`}>{p.label}</p>
+                      <p className={`text-sm font-medium ${active ? "text-foreground" : "text-slate-300"}`}>{p.label}</p>
                       <p className="text-xs text-slate-500">{p.desc}</p>
                     </div>
                   </button>
@@ -218,7 +218,7 @@ export default function InterviewSetupPage() {
             </div>
           </div>
 
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
             <label className="text-sm font-medium text-slate-300 block mb-3">Duration</label>
             <div className="flex gap-2">
               {DURATIONS.map((d) => (
@@ -227,8 +227,8 @@ export default function InterviewSetupPage() {
                   onClick={() => setForm((f) => ({ ...f, duration_minutes: d }))}
                   className={`flex-1 py-2 rounded-lg border text-sm transition-all ${
                     form.duration_minutes === d
-                      ? "border-blue-500 bg-blue-500/10 text-white font-medium"
-                      : "border-[#2a3040] text-slate-400 hover:border-slate-500"
+                      ? "border-blue-500 bg-blue-500/10 text-foreground font-medium"
+                      : "border-[var(--card-border)] text-slate-400 hover:border-slate-500"
                   }`}
                 >
                   {d} min

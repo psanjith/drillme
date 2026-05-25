@@ -68,7 +68,7 @@ export default function WeaknessPage() {
       <div className="max-w-3xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-white mb-1">Weakness Profile</h1>
+            <h1 className="text-2xl font-bold text-foreground mb-1">Weakness Profile</h1>
             <p className="text-slate-400 text-sm">Tracked across all your sessions</p>
           </div>
           <Link href="/drill">
@@ -84,7 +84,7 @@ export default function WeaknessPage() {
             <div className="flex items-start gap-3">
               <AlertTriangle size={16} className="text-amber-400 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-white text-sm font-medium mb-2">Focus recommendations</p>
+                <p className="text-foreground text-sm font-medium mb-2">Focus recommendations</p>
                 <ul className="space-y-1.5">
                   {recommendations.map((r, i) => (
                     <li key={i} className="text-slate-300 text-sm flex items-start gap-2">
@@ -106,7 +106,7 @@ export default function WeaknessPage() {
               className={`px-3 py-1.5 rounded-full text-xs border transition-all capitalize ${
                 activeCategory === c
                   ? "border-blue-500 bg-blue-500/15 text-blue-300"
-                  : "border-[#2a3040] text-slate-400 hover:border-slate-500"
+                  : "border-[var(--card-border)] text-slate-400 hover:border-slate-500"
               }`}
             >
               {c}
@@ -122,7 +122,7 @@ export default function WeaknessPage() {
         {loading ? (
           <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-16 bg-[#1a1f2e] rounded-xl animate-pulse" />
+              <div key={i} className="h-16 bg-[var(--card)] rounded-xl animate-pulse" />
             ))}
           </div>
         ) : filtered.length === 0 ? (
@@ -142,7 +142,7 @@ export default function WeaknessPage() {
                 <Card key={w.id} className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <p className="text-white text-sm font-medium">{w.tag}</p>
+                      <p className="text-foreground text-sm font-medium">{w.tag}</p>
                       <Badge variant={CATEGORY_COLORS[w.category]}>{w.category}</Badge>
                     </div>
                     <div className={`flex items-center gap-1 text-xs ${trendColor}`}>

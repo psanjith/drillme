@@ -5,9 +5,9 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variantClasses = {
-  default: "bg-[#1a1f2e] border border-[#2a3040]",
-  highlight: "bg-[#1a1f2e] border border-blue-500/30",
-  danger: "bg-[#1a1f2e] border border-red-500/30",
+  default: "bg-[var(--card)] border border-[var(--card-border)]",
+  highlight: "bg-[var(--card)] border border-blue-500/30",
+  danger: "bg-[var(--card)] border border-red-500/30",
 };
 
 export function Card({ variant = "default", children, className = "", ...props }: CardProps) {

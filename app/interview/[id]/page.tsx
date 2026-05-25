@@ -228,7 +228,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
 
   if (state === "loading" || state === "error") {
     return (
-      <div className="min-h-screen bg-[#0f1117] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center px-4">
         <div className="text-center max-w-sm">
           {state === "error" ? (
             <>
@@ -237,12 +237,12 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <p className="text-white font-medium mb-2">Failed to start interview</p>
+              <p className="text-foreground font-medium mb-2">Failed to start interview</p>
               <p className="text-red-400 text-sm mb-6 leading-relaxed">{error}</p>
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={() => router.push("/interview/setup")}
-                  className="px-4 py-2 border border-[#2a3040] text-slate-400 rounded-lg text-sm hover:border-slate-500 hover:text-slate-200 transition-colors"
+                  className="px-4 py-2 border border-[var(--card-border)] text-slate-400 rounded-lg text-sm hover:border-slate-500 hover:text-slate-200 transition-colors"
                 >
                   ← Back to setup
                 </button>
@@ -266,11 +266,11 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
   }
 
   return (
-    <div className="min-h-screen bg-[#0f1117] flex flex-col">
-      <header className="border-b border-[#2a3040] px-6 py-3 flex items-center justify-between">
+    <div className="min-h-screen bg-[var(--background)] flex flex-col">
+      <header className="border-b border-[var(--card-border)] px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img src="/logo.png" alt="DrillMe" className="w-7 h-7 rounded object-contain" />
-          <span className="text-white font-medium text-sm">
+          <span className="text-foreground font-medium text-sm">
             {session?.company ? `${session.company} Interview` : "Practice Interview"}
           </span>
           {session && (
@@ -294,7 +294,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
               setIsRecording(false);
               setSessionOver(true);
             }}
-            className="text-slate-500 hover:text-red-400 text-xs border border-[#2a3040] hover:border-red-500/40 px-3 py-1.5 rounded-lg transition-colors"
+            className="text-slate-500 hover:text-red-400 text-xs border border-[var(--card-border)] hover:border-red-500/40 px-3 py-1.5 rounded-lg transition-colors"
           >
             End interview
           </button>
@@ -312,7 +312,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
 
           {currentQuestion && !sessionOver && state !== "complete" && (
             <div className="flex-1 flex flex-col">
-              <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-6 mb-4">
+              <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-6 mb-4">
                 <div className="flex items-start justify-between mb-4">
                   <PanellistAvatar
                     persona={currentQuestion.panellist_persona as PanellistPersona}
@@ -327,7 +327,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
                   </div>
                 </div>
 
-                <p className="text-white text-lg leading-relaxed font-medium">
+                <p className="text-foreground text-lg leading-relaxed font-medium">
                   {currentQuestion.question_text}
                 </p>
 
@@ -336,7 +336,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
                 )}
               </div>
 
-              <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5 mb-4 flex-1 min-h-40">
+              <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5 mb-4 flex-1 min-h-40">
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Your answer</p>
                   <VoiceVisualizer isRecording={isRecording} isSpeaking={isSpeaking} />
@@ -406,7 +406,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h2 className="text-xl font-bold text-white mb-2">Interview complete</h2>
+                <h2 className="text-xl font-bold text-foreground mb-2">Interview complete</h2>
                 <p className="text-slate-400 text-sm mb-6">Great work. Let&apos;s see how you did.</p>
                 <Button onClick={handleComplete} loading={completing} size="lg">
                   View debrief
@@ -421,12 +421,12 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
       {helpOpen && helpPanel && (
         <div className="fixed inset-0 bg-black/60 flex items-end justify-end z-50" onClick={() => setHelpOpen(false)}>
           <div
-            className="w-full max-w-md h-full bg-[#1a1f2e] border-l border-[#2a3040] overflow-y-auto p-6"
+            className="w-full max-w-md h-full bg-[var(--card)] border-l border-[var(--card-border)] overflow-y-auto p-6"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-white font-semibold">Optimal approach</h3>
-              <button onClick={() => setHelpOpen(false)} className="text-slate-400 hover:text-white">
+              <h3 className="text-foreground font-semibold">Optimal approach</h3>
+              <button onClick={() => setHelpOpen(false)} className="text-slate-400 hover:text-foreground">
                 <X size={18} />
               </button>
             </div>
@@ -451,7 +451,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
 
               <div>
                 <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">Sample strong answer</p>
-                <p className="text-slate-300 text-sm leading-relaxed bg-[#0f1117] rounded-lg p-3">
+                <p className="text-slate-300 text-sm leading-relaxed bg-[var(--background)] rounded-lg p-3">
                   {helpPanel.sampleAnswer}
                 </p>
               </div>

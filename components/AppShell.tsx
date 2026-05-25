@@ -14,6 +14,7 @@ import {
   LogOut,
   Crown,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -41,12 +42,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex h-screen bg-[#0f1117] overflow-hidden">
-      <aside className="w-56 flex-shrink-0 border-r border-[#2a3040] flex flex-col">
-        <div className="px-5 py-5 border-b border-[#2a3040]">
+    <div className="flex h-screen bg-[var(--background)] overflow-hidden">
+      <aside className="w-56 flex-shrink-0 border-r border-[var(--card-border)] flex flex-col">
+        <div className="px-5 py-5 border-b border-[var(--card-border)]">
           <Link href="/dashboard" className="flex items-center gap-2">
             <img src="/logo.png" alt="DrillMe" className="w-8 h-8 rounded object-contain" />
-            <span className="text-white font-semibold">DrillMe</span>
+            <span className="text-foreground font-semibold">DrillMe</span>
           </Link>
         </div>
 
@@ -73,7 +74,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           })}
         </nav>
 
-        <div className="px-3 py-4 border-t border-[#2a3040] flex flex-col gap-1">
+        <div className="px-3 py-4 border-t border-[var(--card-border)] flex flex-col gap-1">
           {isPro === false && (
             <Link
               href="/upgrade"
@@ -89,6 +90,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <span className="text-amber-400 text-sm font-medium">Pro</span>
             </div>
           )}
+          <div className="flex items-center gap-2 px-3 py-1">
+            <ThemeToggle />
+          </div>
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:text-slate-300 hover:bg-white/5 w-full transition-all"

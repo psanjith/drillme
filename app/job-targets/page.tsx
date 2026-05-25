@@ -98,7 +98,7 @@ export default function JobTargetsPage() {
         {/* Page header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-xl font-bold text-white">Job Targets</h1>
+            <h1 className="text-xl font-bold text-foreground">Job Targets</h1>
             <p className="text-slate-400 text-sm mt-0.5">Track your prep progress per role</p>
           </div>
           <button
@@ -115,11 +115,11 @@ export default function JobTargetsPage() {
             <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
           </div>
         ) : targets.length === 0 ? (
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-12 text-center">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-12 text-center">
             <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Briefcase size={22} className="text-blue-400" />
             </div>
-            <p className="text-white font-medium mb-1">No sessions yet</p>
+            <p className="text-foreground font-medium mb-1">No sessions yet</p>
             <p className="text-slate-400 text-sm mb-5">Complete your first interview to start tracking progress</p>
             <button
               onClick={() => router.push("/interview/setup")}
@@ -134,14 +134,14 @@ export default function JobTargetsPage() {
             <div className="relative mb-5" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen((o) => !o)}
-                className="w-full flex items-center justify-between bg-[#1a1f2e] border border-[#2a3040] hover:border-slate-500 rounded-xl px-4 py-3.5 transition-colors"
+                className="w-full flex items-center justify-between bg-[var(--card)] border border-[var(--card-border)] hover:border-slate-500 rounded-xl px-4 py-3.5 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-blue-500/15 rounded-lg flex items-center justify-center">
                     <Briefcase size={15} className="text-blue-400" />
                   </div>
                   <div className="text-left">
-                    <p className="text-white font-medium text-sm">{target?.company}</p>
+                    <p className="text-foreground font-medium text-sm">{target?.company}</p>
                     <p className="text-slate-400 text-xs">{LEVEL_LABELS[target?.roleLevel] || target?.roleLevel}</p>
                   </div>
                 </div>
@@ -152,17 +152,17 @@ export default function JobTargetsPage() {
               </button>
 
               {dropdownOpen && (
-                <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#1a1f2e] border border-[#2a3040] rounded-xl shadow-xl z-20 overflow-hidden">
+                <div className="absolute top-full left-0 right-0 mt-1.5 bg-[var(--card)] border border-[var(--card-border)] rounded-xl shadow-xl z-20 overflow-hidden">
                   {targets.map((t, i) => (
                     <button
                       key={`${t.company}-${t.roleLevel}`}
                       onClick={() => { setSelected(i); setDropdownOpen(false); }}
-                      className="w-full flex items-center justify-between px-4 py-3 hover:bg-white/5 transition-colors border-b border-[#2a3040] last:border-0"
+                      className="w-full flex items-center justify-between px-4 py-3 hover:bg-white/5 transition-colors border-b border-[var(--card-border)] last:border-0"
                     >
                       <div className="flex items-center gap-3">
                         <div className={`w-1.5 h-1.5 rounded-full ${readinessBarColor(t.readiness)}`} />
                         <div className="text-left">
-                          <p className="text-white text-sm font-medium">{t.company}</p>
+                          <p className="text-foreground text-sm font-medium">{t.company}</p>
                           <p className="text-slate-400 text-xs">{LEVEL_LABELS[t.roleLevel] || t.roleLevel}</p>
                         </div>
                       </div>
@@ -180,7 +180,7 @@ export default function JobTargetsPage() {
 
             {/* Stats card */}
             {target && (
-              <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5">
+              <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
                 {/* Score + readiness */}
                 <div className="flex items-center gap-5 mb-5">
                   <div className="text-center">
@@ -211,7 +211,7 @@ export default function JobTargetsPage() {
                 <p className="text-slate-400 text-xs font-medium uppercase tracking-wider mb-3">By interview type</p>
                 <div className="space-y-2 mb-5">
                   {target.byType.map((t) => (
-                    <div key={t.type} className="flex items-center gap-3 bg-[#0f1117] border border-[#2a3040] rounded-lg px-4 py-3">
+                    <div key={t.type} className="flex items-center gap-3 bg-[var(--background)] border border-[var(--card-border)] rounded-lg px-4 py-3">
                       <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${t.sessionCount > 0 ? readinessBarColor(t.avgScore ?? 0) : "bg-slate-700"}`} />
                       <span className="text-slate-300 text-sm flex-1">{TYPE_LABELS[t.type]}</span>
                       {t.sessionCount > 0 ? (

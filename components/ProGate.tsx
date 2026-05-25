@@ -33,7 +33,7 @@ export function ProGate({ children, feature }: Props) {
           <div className="w-14 h-14 bg-blue-500/10 border border-blue-500/20 rounded-2xl flex items-center justify-center mx-auto mb-5">
             <Lock size={22} className="text-blue-400" />
           </div>
-          <h2 className="text-xl font-bold text-white mb-2">{feature} is a Pro feature</h2>
+          <h2 className="text-xl font-bold text-foreground mb-2">{feature} is a Pro feature</h2>
           <p className="text-slate-400 text-sm mb-6 leading-relaxed">
             Upgrade to DrillMe Pro for unlimited interviews, detailed feedback, weakness tracking, and more.
           </p>

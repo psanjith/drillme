@@ -47,18 +47,18 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0f1117] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[var(--background)] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
             <img src="/logo.png" alt="DrillMe" className="w-10 h-10 rounded object-contain" />
-            <span className="text-white font-semibold text-lg">DrillMe</span>
+            <span className="text-foreground font-semibold text-lg">DrillMe</span>
           </Link>
-          <h1 className="text-2xl font-bold text-white">Welcome back</h1>
+          <h1 className="text-2xl font-bold text-foreground">Welcome back</h1>
           <p className="text-slate-400 text-sm mt-1">Sign in to continue your prep</p>
         </div>
 
-        <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-6">
+        <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-6">
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <Input
               label="Email"
@@ -90,10 +90,10 @@ export default function LoginPage() {
 
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-[#2a3040]" />
+              <div className="w-full border-t border-[var(--card-border)]" />
             </div>
             <div className="relative flex justify-center">
-              <span className="px-2 bg-[#1a1f2e] text-slate-500 text-xs">or</span>
+              <span className="px-2 bg-[var(--card)] text-slate-500 text-xs">or</span>
             </div>
           </div>
 

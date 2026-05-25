@@ -117,7 +117,7 @@ export default function DrillPage() {
       <ProGate feature="Drill Mode">
       <div className="max-w-2xl mx-auto px-6 py-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white mb-1">Drill Mode</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-1">Drill Mode</h1>
           <p className="text-slate-400 text-sm">10–15 minute focused sessions targeting your highest-severity weaknesses</p>
         </div>
 
@@ -126,7 +126,7 @@ export default function DrillPage() {
             <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <Target size={28} className="text-blue-400" />
             </div>
-            <h2 className="text-white font-semibold text-lg mb-2">Ready to be drilled?</h2>
+            <h2 className="text-foreground font-semibold text-lg mb-2">Ready to be drilled?</h2>
             <p className="text-slate-400 text-sm mb-6 max-w-sm mx-auto">
               We&apos;ll target your top 3–5 weakness areas with focused questions and coaching feedback.
             </p>
@@ -155,16 +155,16 @@ export default function DrillPage() {
               <span className="text-slate-400 text-sm">{currentIndex + 1} / {drillData.questions.length}</span>
             </div>
 
-            <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-6 mb-4">
+            <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-6 mb-4">
               <div className="flex items-center gap-3 mb-4">
                 <PanellistAvatar persona="senior_engineer" speaking={isSpeaking} size="md" />
               </div>
-              <p className="text-white text-base leading-relaxed font-medium">{currentQuestion.question_text}</p>
+              <p className="text-foreground text-base leading-relaxed font-medium">{currentQuestion.question_text}</p>
               <p className="text-slate-500 text-xs mt-2">Topic: {currentQuestion.topic}</p>
             </div>
 
             {drillState !== "feedback" && (
-              <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5 mb-4">
+              <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5 mb-4">
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-slate-400 text-xs uppercase tracking-wider">Your answer</p>
                   <VoiceVisualizer isRecording={isRecording} isSpeaking={isSpeaking} />
@@ -189,13 +189,13 @@ export default function DrillPage() {
             )}
 
             {drillState === "feedback" && lastFeedback && (
-              <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5 mb-4 space-y-4">
+              <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5 mb-4 space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   {Object.entries(lastFeedback.scores || {}).map(([key, val]) => (
                     <div key={key}>
                       <div className="flex justify-between text-xs mb-1">
                         <span className="text-slate-400 capitalize">{key.replace(/_/g, " ")}</span>
-                        <span className="text-white">{val}/5</span>
+                        <span className="text-foreground">{val}/5</span>
                       </div>
                       <div className="h-1.5 bg-[#2a3040] rounded-full overflow-hidden">
                         <div
@@ -253,7 +253,7 @@ export default function DrillPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-white font-semibold text-lg mb-2">Drill complete!</h2>
+            <h2 className="text-foreground font-semibold text-lg mb-2">Drill complete!</h2>
             <p className="text-slate-400 text-sm mb-6">Great practice session. Keep drilling to see your weakness scores drop.</p>
             <Button onClick={() => { setDrillState("idle"); setDrillData(null); }}>
               Start another drill

@@ -13,10 +13,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={`
-            w-full px-3 py-2.5 bg-[#1a1f2e] border rounded-lg text-slate-100 text-sm
+            w-full px-3 py-2.5 bg-[var(--card)] border rounded-lg text-slate-100 text-sm
             placeholder:text-slate-500 outline-none transition-all
             focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30
-            ${error ? "border-red-500/50" : "border-[#2a3040]"}
+            ${error ? "border-red-500/50" : "border-[var(--card-border)]"}
             ${className}
           `}
           {...props}
@@ -41,10 +41,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         <textarea
           ref={ref}
           className={`
-            w-full px-3 py-2.5 bg-[#1a1f2e] border rounded-lg text-slate-100 text-sm
+            w-full px-3 py-2.5 bg-[var(--card)] border rounded-lg text-slate-100 text-sm
             placeholder:text-slate-500 outline-none transition-all resize-none
             focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30
-            ${error ? "border-red-500/50" : "border-[#2a3040]"}
+            ${error ? "border-red-500/50" : "border-[var(--card-border)]"}
             ${className}
           `}
           {...props}

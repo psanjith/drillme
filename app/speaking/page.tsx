@@ -195,7 +195,7 @@ export default function SpeakingPage() {
             <MessageCircle size={20} className="text-teal-400" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">Speaking Practice</h1>
+            <h1 className="text-2xl font-bold text-foreground">Speaking Practice</h1>
             <p className="text-slate-400 text-sm">AI-powered · 5 session types</p>
           </div>
         </div>
@@ -207,14 +207,14 @@ export default function SpeakingPage() {
                 <button
                   key={type.value}
                   onClick={() => setSessionType(type.value)}
-                  className={`p-4 rounded-xl border text-left transition-all bg-[#1a1f2e] ${
+                  className={`p-4 rounded-xl border text-left transition-all bg-[var(--card)] ${
                     sessionType === type.value
                       ? type.color + " bg-teal-500/5"
-                      : "border-[#2a3040] " + type.color
+                      : "border-[var(--card-border)] " + type.color
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
-                    <p className="text-white font-medium text-sm">{type.label}</p>
+                    <p className="text-foreground font-medium text-sm">{type.label}</p>
                     <Badge variant="slate">{type.duration}</Badge>
                   </div>
                   <p className="text-slate-400 text-xs">{type.desc}</p>
@@ -252,9 +252,9 @@ export default function SpeakingPage() {
             <div className="w-12 h-12 bg-teal-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <MessageCircle size={20} className="text-teal-400" />
             </div>
-            <p className="text-white text-sm font-medium mb-1">Your speaking coach</p>
+            <p className="text-foreground text-sm font-medium mb-1">Your speaking coach</p>
             {isSpeaking && <p className="text-teal-400 text-xs mb-4">Speaking...</p>}
-            <p className="text-slate-300 text-sm leading-relaxed mb-6 bg-[#0f1117] rounded-lg p-3">{intro}</p>
+            <p className="text-slate-300 text-sm leading-relaxed mb-6 bg-[var(--background)] rounded-lg p-3">{intro}</p>
             <Button onClick={startRecording} variant="teal" size="lg">
               <Mic size={16} />
               {voiceSupported ? "Start speaking" : "I'm ready"}
@@ -268,7 +268,7 @@ export default function SpeakingPage() {
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                  <p className="text-white text-sm font-medium">Recording</p>
+                  <p className="text-foreground text-sm font-medium">Recording</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-slate-400 text-sm font-mono">{formatTime(elapsed)}</span>
@@ -317,7 +317,7 @@ export default function SpeakingPage() {
               ].map((m) => (
                 <Card key={m.label} className="p-3 text-center">
                   <p className="text-slate-400 text-xs mb-1">{m.label}</p>
-                  <p className="text-white font-semibold text-sm mt-1 capitalize">{m.value}</p>
+                  <p className="text-foreground font-semibold text-sm mt-1 capitalize">{m.value}</p>
                 </Card>
               ))}
             </div>

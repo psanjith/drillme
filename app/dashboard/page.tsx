@@ -56,7 +56,7 @@ export default function DashboardPage() {
       <ProGate feature="Dashboard">
       <div className="px-6 py-8 max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
           <Link href="/interview/setup">
             <Button>
               <Mic size={15} />
@@ -74,13 +74,13 @@ export default function DashboardPage() {
 
           <Card className="p-5">
             <p className="text-slate-400 text-xs mb-1">Sessions done</p>
-            <p className="text-4xl font-bold text-white">{data?.sessions_completed || 0}</p>
+            <p className="text-4xl font-bold text-foreground">{data?.sessions_completed || 0}</p>
             <p className="text-slate-500 text-xs mt-1">interviews</p>
           </Card>
 
           <Card className="p-5">
             <p className="text-slate-400 text-xs mb-1">Practice time</p>
-            <p className="text-4xl font-bold text-white">{data?.total_practice_minutes || 0}</p>
+            <p className="text-4xl font-bold text-foreground">{data?.total_practice_minutes || 0}</p>
             <p className="text-slate-500 text-xs mt-1">minutes</p>
           </Card>
 
@@ -88,7 +88,7 @@ export default function DashboardPage() {
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-slate-400 text-xs mb-1">Daily streak</p>
-                <p className="text-4xl font-bold text-white">{data?.daily_streak || 0}</p>
+                <p className="text-4xl font-bold text-foreground">{data?.daily_streak || 0}</p>
                 <p className="text-slate-500 text-xs mt-1">days</p>
               </div>
               <Flame size={20} className={data?.daily_streak ? "text-amber-400" : "text-slate-600"} />
@@ -99,7 +99,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="col-span-2">
             <Card className="p-5">
-              <p className="text-white text-sm font-medium mb-4">Readiness over time</p>
+              <p className="text-foreground text-sm font-medium mb-4">Readiness over time</p>
               {(data?.readiness_history || []).length > 1 ? (
                 <ResponsiveContainer width="100%" height={160}>
                   <LineChart data={data?.readiness_history}>
@@ -130,7 +130,7 @@ export default function DashboardPage() {
 
           <div>
             <Card className="p-5 h-full">
-              <p className="text-white text-sm font-medium mb-4">Top weaknesses</p>
+              <p className="text-foreground text-sm font-medium mb-4">Top weaknesses</p>
               {(data?.top_weaknesses || []).length === 0 ? (
                 <p className="text-slate-600 text-xs">No data yet</p>
               ) : (
@@ -163,7 +163,7 @@ export default function DashboardPage() {
             <div className="flex items-start gap-3">
               <AlertTriangle size={16} className="text-amber-400 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-white text-sm font-medium mb-2">AI focus recommendations</p>
+                <p className="text-foreground text-sm font-medium mb-2">AI focus recommendations</p>
                 <ul className="space-y-1.5">
                   {data?.focus_recommendations.map((r, i) => (
                     <li key={i} className="text-slate-300 text-sm flex items-start gap-2">
@@ -179,13 +179,13 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <Card className="p-5">
-            <p className="text-white text-sm font-medium mb-3">Recent sessions</p>
+            <p className="text-foreground text-sm font-medium mb-3">Recent sessions</p>
             {(data?.recent_sessions || []).length === 0 ? (
               <p className="text-slate-600 text-xs">No sessions yet</p>
             ) : (
               <div className="space-y-2">
                 {(data?.recent_sessions || []).slice(0, 4).map((s) => (
-                  <Link key={s.id} href={`/debrief/${s.id}`} className="flex items-center justify-between py-2 border-b border-[#2a3040] last:border-0 hover:bg-white/5 -mx-2 px-2 rounded transition-colors">
+                  <Link key={s.id} href={`/debrief/${s.id}`} className="flex items-center justify-between py-2 border-b border-[var(--card-border)] last:border-0 hover:bg-white/5 -mx-2 px-2 rounded transition-colors">
                     <div>
                       <p className="text-slate-200 text-xs font-medium">{s.company || "Practice"}</p>
                       <p className="text-slate-500 text-xs">{s.role_level} · {s.interview_type}</p>
@@ -203,7 +203,7 @@ export default function DashboardPage() {
           </Card>
 
           <Card className="p-5">
-            <p className="text-white text-sm font-medium mb-3">Quick actions</p>
+            <p className="text-foreground text-sm font-medium mb-3">Quick actions</p>
             <div className="space-y-2">
               <Link href="/interview/setup" className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
                 <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">

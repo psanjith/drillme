@@ -57,7 +57,7 @@ export default function OnboardingPage() {
             placeholder="Your name"
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-            className="w-full px-4 py-3 bg-[#0f1117] border border-[#2a3040] rounded-lg text-white text-lg placeholder:text-slate-600 outline-none focus:border-blue-500 transition-colors"
+            className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--card-border)] rounded-lg text-foreground text-lg placeholder:text-slate-600 outline-none focus:border-blue-500 transition-colors"
             autoFocus
           />
         </div>
@@ -75,10 +75,10 @@ export default function OnboardingPage() {
               className={`p-4 rounded-xl border text-left transition-all ${
                 form.experience_level === lvl.value
                   ? "border-blue-500 bg-blue-500/10"
-                  : "border-[#2a3040] hover:border-slate-500"
+                  : "border-[var(--card-border)] hover:border-slate-500"
               }`}
             >
-              <p className="text-white font-medium">{lvl.label}</p>
+              <p className="text-foreground font-medium">{lvl.label}</p>
               <p className="text-slate-500 text-sm">{lvl.desc}</p>
             </button>
           ))}
@@ -99,7 +99,7 @@ export default function OnboardingPage() {
                 className={`px-3 py-1.5 rounded-full text-sm border transition-all ${
                   form.target_companies.includes(c)
                     ? "border-blue-500 bg-blue-500/15 text-blue-300"
-                    : "border-[#2a3040] text-slate-400 hover:border-slate-500"
+                    : "border-[var(--card-border)] text-slate-400 hover:border-slate-500"
                 }`}
               >
                 {c}
@@ -122,8 +122,8 @@ export default function OnboardingPage() {
                 onClick={() => setForm((f) => ({ ...f, weekly_goal: n }))}
                 className={`p-3 rounded-xl border text-center transition-all ${
                   form.weekly_goal === n
-                    ? "border-blue-500 bg-blue-500/10 text-white"
-                    : "border-[#2a3040] text-slate-400 hover:border-slate-500"
+                    ? "border-blue-500 bg-blue-500/10 text-foreground"
+                    : "border-[var(--card-border)] text-slate-400 hover:border-slate-500"
                 }`}
               >
                 <p className="text-xl font-semibold">{n}</p>
@@ -141,12 +141,12 @@ export default function OnboardingPage() {
   const isLast = step === steps.length - 1;
 
   return (
-    <div className="min-h-screen bg-[#0f1117] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[var(--background)] flex items-center justify-center px-4">
       <div className="w-full max-w-lg">
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-6">
             <img src="/logo.png" alt="DrillMe" className="w-8 h-8 rounded object-contain" />
-            <span className="text-white font-semibold">DrillMe</span>
+            <span className="text-foreground font-semibold">DrillMe</span>
           </div>
           <div className="flex gap-1.5 mb-8">
             {steps.map((_, i) => (
@@ -159,7 +159,7 @@ export default function OnboardingPage() {
             ))}
           </div>
           <p className="text-slate-500 text-sm mb-2">Step {step + 1} of {steps.length}</p>
-          <h1 className="text-2xl font-bold text-white">{current.title}</h1>
+          <h1 className="text-2xl font-bold text-foreground">{current.title}</h1>
         </div>
 
         <div className="mb-8">{current.content}</div>

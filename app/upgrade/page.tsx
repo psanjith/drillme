@@ -48,15 +48,15 @@ export default function UpgradePage() {
             <Zap size={12} className="text-blue-400" />
             <span className="text-blue-400 text-xs font-medium">DrillMe Pro</span>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-3">Unlock your full potential</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-3">Unlock your full potential</h1>
           <p className="text-slate-400">Everything you need to walk into any interview prepared.</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-8">
           {/* Free */}
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-2xl p-6">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl p-6">
             <p className="text-slate-400 text-sm font-medium mb-1">Free</p>
-            <p className="text-3xl font-bold text-white mb-6">$0</p>
+            <p className="text-3xl font-bold text-foreground mb-6">$0</p>
             <ul className="space-y-3">
               {FREE_FEATURES.map((f) => (
                 <li key={f} className="flex items-start gap-2.5 text-sm text-slate-400">
@@ -68,13 +68,13 @@ export default function UpgradePage() {
           </div>
 
           {/* Pro */}
-          <div className="bg-[#1a1f2e] border-2 border-blue-500 rounded-2xl p-6 relative">
+          <div className="bg-[var(--card)] border-2 border-blue-500 rounded-2xl p-6 relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-xs font-medium px-3 py-1 rounded-full">
               Recommended
             </div>
             <p className="text-blue-400 text-sm font-medium mb-1">Pro</p>
             <div className="flex items-baseline gap-1 mb-6">
-              <p className="text-3xl font-bold text-white">$15</p>
+              <p className="text-3xl font-bold text-foreground">$15</p>
               <p className="text-slate-400 text-sm">/month</p>
             </div>
             <ul className="space-y-3">
@@ -104,7 +104,7 @@ export default function UpgradePage() {
 
         <p className="text-center text-slate-500 text-xs mt-4">
           Cancel any time · No contracts ·{" "}
-          <Link href="/dashboard" className="text-slate-400 hover:text-white underline">Back to dashboard</Link>
+          <Link href="/dashboard" className="text-slate-400 hover:text-foreground underline">Back to dashboard</Link>
         </p>
       </div>
     </AppShell>

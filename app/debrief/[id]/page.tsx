@@ -16,7 +16,7 @@ function ScoreBar({ label, score }: { label: string; score: number }) {
     <div>
       <div className="flex justify-between text-xs mb-1">
         <span className="text-slate-400">{label}</span>
-        <span className="text-white font-medium">{score}/5</span>
+        <span className="text-foreground font-medium">{score}/5</span>
       </div>
       <div className="h-1.5 bg-[#2a3040] rounded-full overflow-hidden">
         <div className={`h-full ${color} rounded-full transition-all`} style={{ width: `${(score / 5) * 100}%` }} />
@@ -32,7 +32,7 @@ function QuestionAccordion({ question, index, isPro }: { question: SessionQuesti
     : null;
 
   return (
-    <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl overflow-hidden">
+    <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl overflow-hidden">
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
@@ -58,18 +58,18 @@ function QuestionAccordion({ question, index, isPro }: { question: SessionQuesti
       </button>
 
       {open && (
-        <div className="border-t border-[#2a3040] px-5 py-5 space-y-5 relative">
+        <div className="border-t border-[var(--card-border)] px-5 py-5 space-y-5 relative">
           {!isPro && (
-            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#1a1f2e]/80 backdrop-blur-sm rounded-b-xl">
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[var(--card)]/80 backdrop-blur-sm rounded-b-xl">
               <Lock size={18} className="text-blue-400 mb-2" />
-              <p className="text-white text-sm font-medium mb-1">Detailed feedback is a Pro feature</p>
+              <p className="text-foreground text-sm font-medium mb-1">Detailed feedback is a Pro feature</p>
               <Link href="/upgrade" className="text-blue-400 hover:text-blue-300 text-xs underline">Upgrade to unlock →</Link>
             </div>
           )}
           {question.user_answer_transcript && (
             <div>
               <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">Your answer</p>
-              <p className="text-slate-300 text-sm leading-relaxed bg-[#0f1117] rounded-lg p-3">
+              <p className="text-slate-300 text-sm leading-relaxed bg-[var(--background)] rounded-lg p-3">
                 {question.user_answer_transcript}
               </p>
             </div>
@@ -120,7 +120,7 @@ function QuestionAccordion({ question, index, isPro }: { question: SessionQuesti
               {question.feedback.top_answer_additions && (
                 <div>
                   <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">What a top answer adds</p>
-                  <p className="text-slate-300 text-sm leading-relaxed bg-[#0f1117] rounded-lg p-3">
+                  <p className="text-slate-300 text-sm leading-relaxed bg-[var(--background)] rounded-lg p-3">
                     {question.feedback.top_answer_additions}
                   </p>
                 </div>
@@ -170,7 +170,7 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
       <div className="max-w-3xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-bold text-white mb-1">Interview Debrief</h1>
+            <h1 className="text-2xl font-bold text-foreground mb-1">Interview Debrief</h1>
             <p className="text-slate-400 text-sm">
               {session?.company || "Practice"} · {session?.role_level} · {session?.interview_type}
             </p>
@@ -181,7 +181,7 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
         </div>
 
         <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5 col-span-1">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5 col-span-1">
             <p className="text-slate-400 text-xs mb-1">Readiness score</p>
             <p className={`text-4xl font-bold ${scoreColor}`}>{avgScore}</p>
             <p className="text-slate-500 text-xs mt-1">out of 100</p>
@@ -192,15 +192,15 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
             )}
           </div>
 
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
             <p className="text-slate-400 text-xs mb-1">Questions answered</p>
-            <p className="text-3xl font-bold text-white">{answeredQuestions.length}</p>
+            <p className="text-3xl font-bold text-foreground">{answeredQuestions.length}</p>
             <p className="text-slate-500 text-xs mt-1">of {questions.length} asked</p>
           </div>
 
-          <div className="bg-[#1a1f2e] border border-[#2a3040] rounded-xl p-5">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
             <p className="text-slate-400 text-xs mb-1">Help used</p>
-            <p className="text-3xl font-bold text-white">
+            <p className="text-3xl font-bold text-foreground">
               {questions.filter((q) => q.help_requested).length}
             </p>
             <p className="text-slate-500 text-xs mt-1">times</p>
