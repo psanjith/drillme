@@ -18,8 +18,8 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/job-targets", label: "Job Targets", icon: Briefcase },
   { href: "/interview/setup", label: "Interview", icon: Mic },
+  { href: "/job-targets", label: "Job Targets", icon: Briefcase },
   { href: "/drill", label: "Drill Mode", icon: Zap },
   { href: "/weakness", label: "Weaknesses", icon: BarChart3 },
   { href: "/speaking", label: "Speaking", icon: MessageSquare },

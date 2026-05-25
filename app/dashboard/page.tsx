@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
-import { ProGate } from "@/components/ProGate";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
-import { TrendingUp, TrendingDown, Minus, Flame, Mic, Zap, MessageCircle, AlertTriangle } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Flame, Mic, Zap, MessageCircle, AlertTriangle, ArrowRight } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -28,14 +26,17 @@ const TREND_COLORS = { improving: "text-green-400", worsening: "text-red-400", s
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isPro, setIsPro] = useState<boolean | null>(null);
 
   useEffect(() => {
-    fetch("/api/dashboard")
-      .then((r) => r.json())
-      .then((d) => {
-        setData(d);
-        setLoading(false);
-      });
+    Promise.all([
+      fetch("/api/dashboard").then((r) => r.json()),
+      fetch("/api/billing/status").then((r) => r.json()),
+    ]).then(([dash, billing]) => {
+      setData(dash);
+      setIsPro(billing.isPro ?? false);
+      setLoading(false);
+    });
   }, []);
 
   if (loading) {
@@ -53,8 +54,22 @@ export default function DashboardPage() {
 
   return (
     <AppShell>
-      <ProGate feature="Dashboard">
       <div className="px-6 py-8 max-w-5xl mx-auto">
+        {isPro === false && (
+          <div className="mb-6 rounded-xl border border-blue-500/30 bg-blue-500/8 px-5 py-4 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-foreground font-medium text-sm">Ready to practice?</p>
+              <p className="text-slate-400 text-xs mt-0.5">Interviews are free — start a session and get real-time AI feedback.</p>
+            </div>
+            <Link
+              href="/interview/setup"
+              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-shrink-0"
+            >
+              Start interview
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        )}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
           <Link href="/interview/setup">
@@ -236,7 +251,6 @@ export default function DashboardPage() {
           </Card>
         </div>
       </div>
-      </ProGate>
     </AppShell>
   );
 }
