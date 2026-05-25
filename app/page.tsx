@@ -53,8 +53,8 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <footer className="border-t border-[#2a3040] px-6 py-4 text-center text-slate-600 text-xs">
-        DrillMe · Zero cost · No data sold
+      <footer className="border-t border-[#2a3040] px-6 py-4 text-center text-slate-600 text-xs tracking-wide">
+        Built for the offer. Not the algorithm.
       </footer>
     </div>
   );
