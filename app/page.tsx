@@ -16,9 +16,7 @@ export default function LandingPage() {
 
       <main className="flex-1 flex flex-col items-center justify-center px-6 text-center">
         <div className="max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5 mb-8">
-            <span className="text-blue-400 text-xs font-medium">AI-powered · Free to start</span>
-          </div>
+          <p className="text-slate-500 text-xs font-semibold tracking-[0.25em] uppercase mb-8">Prep · Perform · Peak</p>
 
           <h1 className="text-5xl font-bold text-white mb-6 leading-tight">
             Interview prep that
