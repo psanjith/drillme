@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -25,6 +26,13 @@ const navItems = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [isPro, setIsPro] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    fetch("/api/billing/status")
+      .then((r) => r.json())
+      .then((d) => setIsPro(d.isPro ?? false));
+  }, []);
 
   async function handleLogout() {
     const supabase = createClient();
@@ -66,13 +74,21 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </nav>
 
         <div className="px-3 py-4 border-t border-[#2a3040] flex flex-col gap-1">
-          <Link
-            href="/upgrade"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-amber-400 hover:text-amber-300 hover:bg-amber-400/5 transition-all"
-          >
-            <Crown size={16} />
-            Upgrade to Pro
-          </Link>
+          {isPro === false && (
+            <Link
+              href="/upgrade"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-amber-400 hover:text-amber-300 hover:bg-amber-400/5 transition-all"
+            >
+              <Crown size={16} />
+              Upgrade to Pro
+            </Link>
+          )}
+          {isPro === true && (
+            <div className="flex items-center gap-3 px-3 py-2 rounded-lg">
+              <Crown size={16} className="text-amber-400" />
+              <span className="text-amber-400 text-sm font-medium">Pro</span>
+            </div>
+          )}
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:text-slate-300 hover:bg-white/5 w-full transition-all"
