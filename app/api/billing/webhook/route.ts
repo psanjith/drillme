@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { verifyWebhookSignature } from "@/lib/stripe";
 
 export async function POST(request: Request) {
@@ -11,7 +11,10 @@ export async function POST(request: Request) {
   if (!valid) return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
 
   const event = JSON.parse(payload);
-  const supabase = await createClient();
+  const supabase = createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
 
   try {
     switch (event.type) {
