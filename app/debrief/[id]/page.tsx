@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { PanellistAvatar } from "@/components/interview/PanellistAvatar";
 import { ChevronDown, ChevronRight, Star, Lock } from "lucide-react";
-import Link from "next/link";
 import type { Session, SessionQuestion, PanellistPersona } from "@/types";
 
 function ScoreBar({ label, score }: { label: string; score: number }) {
