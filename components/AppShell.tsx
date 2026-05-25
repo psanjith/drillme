@@ -37,7 +37,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <aside className="w-56 flex-shrink-0 border-r border-[#2a3040] flex flex-col">
         <div className="px-5 py-5 border-b border-[#2a3040]">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <img src="/logo.png" alt="DrillMe" className="w-20 h-20 rounded-lg object-contain" />
+            <img src="/logo.png" alt="DrillMe" className="w-8 h-8 rounded object-contain" />
             <span className="text-white font-semibold">DrillMe</span>
           </Link>
         </div>

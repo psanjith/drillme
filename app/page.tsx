@@ -5,7 +5,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-[#0f1117] flex flex-col">
       <nav className="border-b border-[#2a3040] px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="DrillMe" className="w-28 h-28 rounded-xl object-contain" />
+          <img src="/logo.png" alt="DrillMe" className="w-8 h-8 rounded object-contain" />
           <span className="text-white font-semibold text-lg">DrillMe</span>
         </div>
         <div className="flex items-center gap-3">
@@ -17,7 +17,7 @@ export default function LandingPage() {
       <main className="flex-1 flex flex-col items-center justify-center px-6 text-center">
         <div className="max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5 mb-8">
-            <span className="text-blue-400 text-xs font-medium">Powered by Gemini 2.0 Flash · 100% free</span>
+            <span className="text-blue-400 text-xs font-medium">AI-powered · Free to start</span>
           </div>
 
           <h1 className="text-5xl font-bold text-white mb-6 leading-tight">

@@ -51,7 +51,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
-            <img src="/logo.png" alt="DrillMe" className="w-36 h-36 rounded-xl object-contain" />
+            <img src="/logo.png" alt="DrillMe" className="w-10 h-10 rounded object-contain" />
             <span className="text-white font-semibold text-lg">DrillMe</span>
           </Link>
           <h1 className="text-2xl font-bold text-white">Welcome back</h1>

@@ -229,7 +229,7 @@ export default function DashboardPage() {
                 </div>
                 <div>
                   <p className="text-slate-200 text-sm">Speaking practice</p>
-                  <p className="text-slate-500 text-xs">Coach with Alex</p>
+                  <p className="text-slate-500 text-xs">Improve your delivery</p>
                 </div>
               </Link>
             </div>

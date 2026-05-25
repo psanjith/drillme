@@ -24,14 +24,14 @@ const SESSION_TYPES: { value: SpeakingSessionType; label: string; desc: string; 
   {
     value: "prompted_talk",
     label: "Prompted Talk",
-    desc: "Alex gives you a random topic. You speak for 1–3 minutes.",
+    desc: "You're given a random topic. Speak for 1–3 minutes.",
     color: "border-blue-500/30 hover:border-blue-500/60",
     duration: "1–3 min",
   },
   {
     value: "presentation_practice",
     label: "Presentation Practice",
-    desc: "Paste your notes. Alex acts as your audience and gives structured feedback.",
+    desc: "Paste your notes and get structured feedback from your AI audience.",
     color: "border-purple-500/30 hover:border-purple-500/60",
     duration: "Any length",
   },
@@ -196,7 +196,7 @@ export default function SpeakingPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">Speaking Practice</h1>
-            <p className="text-slate-400 text-sm">Coached by Alex · 5 session types</p>
+            <p className="text-slate-400 text-sm">AI-powered · 5 session types</p>
           </div>
         </div>
 
@@ -242,7 +242,7 @@ export default function SpeakingPage() {
               variant="teal"
               className="w-full"
             >
-              Start session with Alex
+              Start session
             </Button>
           </div>
         )}
@@ -250,9 +250,9 @@ export default function SpeakingPage() {
         {speakingState === "intro" && (
           <Card className="p-6 text-center">
             <div className="w-12 h-12 bg-teal-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-teal-300 font-bold">A</span>
+              <MessageCircle size={20} className="text-teal-400" />
             </div>
-            <p className="text-white text-sm font-medium mb-1">Alex, your speaking coach</p>
+            <p className="text-white text-sm font-medium mb-1">Your speaking coach</p>
             {isSpeaking && <p className="text-teal-400 text-xs mb-4">Speaking...</p>}
             <p className="text-slate-300 text-sm leading-relaxed mb-6 bg-[#0f1117] rounded-lg p-3">{intro}</p>
             <Button onClick={startRecording} variant="teal" size="lg">
@@ -295,7 +295,7 @@ export default function SpeakingPage() {
 
             <div className="flex justify-center">
               {speakingState === "processing" ? (
-                <Button loading variant="teal" size="lg">Analysing your speech...</Button>
+                <Button loading variant="teal" size="lg">Analyzing your speech...</Button>
               ) : (
                 <Button onClick={stopRecording} variant="danger" size="lg" className="px-10">
                   <MicOff size={16} />
@@ -308,22 +308,23 @@ export default function SpeakingPage() {
 
         {speakingState === "feedback" && feedback && (
           <div className="space-y-4">
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { label: "Clarity", value: feedback.scores.clarity, max: 5 },
-                { label: "Structure", value: feedback.scores.structure, max: 5 },
-                { label: "Fillers", value: feedback.filler_word_count, max: null },
+                { label: "Clarity", value: `${feedback.scores.clarity}/5` },
+                { label: "Structure", value: `${feedback.scores.structure}/5` },
+                { label: "Fillers", value: String(feedback.filler_word_count) },
+                { label: "Vocabulary", value: feedback.scores.vocabulary_range.replace(/_/g, " ") },
               ].map((m) => (
                 <Card key={m.label} className="p-3 text-center">
                   <p className="text-slate-400 text-xs mb-1">{m.label}</p>
-                  <p className="text-white font-bold text-xl">{m.value}{m.max ? `/${m.max}` : ""}</p>
+                  <p className="text-white font-semibold text-sm mt-1 capitalize">{m.value}</p>
                 </Card>
               ))}
-              <Card className="p-3 text-center">
-                <p className="text-slate-400 text-xs mb-1">Pacing</p>
-                <p className={`font-bold text-sm mt-1 ${pacingColor}`}>{feedback.scores.pacing.replace(/_/g, " ")}</p>
-              </Card>
             </div>
+            <Card className="p-3 flex items-center justify-between">
+              <p className="text-slate-400 text-xs">Pacing</p>
+              <p className={`font-semibold text-sm capitalize ${pacingColor}`}>{feedback.scores.pacing.replace(/_/g, " ")}</p>
+            </Card>
 
             {Object.keys(feedback.filler_words_detected || {}).length > 0 && (
               <Card className="p-4">
@@ -378,7 +379,7 @@ export default function SpeakingPage() {
             <Card className="p-4">
               <div className="flex items-start gap-3">
                 <div className="w-7 h-7 bg-teal-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-teal-300 text-xs font-bold">A</span>
+                  <MessageCircle size={13} className="text-teal-400" />
                 </div>
                 <p className="text-slate-300 text-sm leading-relaxed">{feedback.feedback}</p>
               </div>

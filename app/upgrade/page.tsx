@@ -99,12 +99,12 @@ export default function UpgradePage() {
           disabled={loading}
           className="w-full bg-blue-500 hover:bg-blue-600 disabled:opacity-60 text-white font-medium py-3.5 rounded-xl transition-colors text-base"
         >
-          {loading ? "Redirecting to checkout..." : "Upgrade to Pro — $15/month"}
+          {loading ? "Redirecting to checkout..." : "Upgrade to Pro"}
         </button>
 
         <p className="text-center text-slate-500 text-xs mt-4">
-          Cancel any time. No contracts.{" "}
-          <Link href="/dashboard" className="text-slate-400 hover:text-white">← Back to dashboard</Link>
+          Cancel any time · No contracts ·{" "}
+          <Link href="/dashboard" className="text-slate-400 hover:text-white underline">Back to dashboard</Link>
         </p>
       </div>
     </AppShell>

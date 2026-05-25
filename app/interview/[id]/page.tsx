@@ -269,7 +269,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
     <div className="min-h-screen bg-[#0f1117] flex flex-col">
       <header className="border-b border-[#2a3040] px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="DrillMe" className="w-18 h-18 rounded-lg object-contain" />
+          <img src="/logo.png" alt="DrillMe" className="w-7 h-7 rounded object-contain" />
           <span className="text-white font-medium text-sm">
             {session?.company ? `${session.company} Interview` : "Practice Interview"}
           </span>

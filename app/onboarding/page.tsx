@@ -145,7 +145,7 @@ export default function OnboardingPage() {
       <div className="w-full max-w-lg">
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-6">
-            <img src="/logo.png" alt="DrillMe" className="w-28 h-28 rounded-xl object-contain" />
+            <img src="/logo.png" alt="DrillMe" className="w-8 h-8 rounded object-contain" />
             <span className="text-white font-semibold">DrillMe</span>
           </div>
           <div className="flex gap-1.5 mb-8">
