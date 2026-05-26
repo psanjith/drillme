@@ -33,9 +33,10 @@ export async function GET() {
     const readinessHistory = sessions
       .slice()
       .reverse()
+      .filter((s) => s.overall_score != null)
       .map((s) => ({
         date: s.completed_at?.split("T")[0] || "",
-        score: s.overall_score || 0,
+        score: Math.round(s.overall_score),
       }));
 
     const totalMinutes = sessions.reduce((sum, s) => {
