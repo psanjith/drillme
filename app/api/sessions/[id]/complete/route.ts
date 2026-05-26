@@ -31,34 +31,51 @@ export async function POST(
       (q) => q.user_answer_transcript
     );
 
-    const debrief = await generateDebrief({
-      sessionQuestions: answeredQuestions,
-      roleLevel: session.role_level,
-      company: session.company,
-    });
+    // Compute score deterministically from per-question scores (1-5 per dimension → 0-100).
+    // Each question has 4 dimensions max 5 each = 20 max per question.
+    const scoredQuestions = answeredQuestions.filter((q) => q.scores);
+    const overallScore = scoredQuestions.length > 0
+      ? Math.round(
+          scoredQuestions.reduce((sum, q) => {
+            const s = q.scores;
+            return sum + s.technical_accuracy + s.communication_clarity +
+              s.structured_thinking + s.completeness;
+          }, 0) / (scoredQuestions.length * 20) * 100
+        )
+      : 0;
 
-    const { data: previousSession } = await supabase
-      .from("sessions")
-      .select("overall_score")
-      .eq("user_id", user.id)
-      .eq("status", "completed")
-      .order("completed_at", { ascending: false })
-      .limit(1)
-      .single();
+    const [debriefResult, previousSession] = await Promise.all([
+      generateDebrief({
+        sessionQuestions: answeredQuestions,
+        roleLevel: session.role_level,
+        company: session.company,
+      }),
+      supabase
+        .from("sessions")
+        .select("overall_score")
+        .eq("user_id", user.id)
+        .eq("status", "completed")
+        .order("completed_at", { ascending: false })
+        .limit(1)
+        .single()
+        .then((r) => r.data),
+    ]);
 
-    const readinessDelta = previousSession
-      ? debrief.overall_score - previousSession.overall_score
+    const readinessDelta = previousSession?.overall_score != null
+      ? overallScore - previousSession.overall_score
       : 0;
 
     await supabase
       .from("sessions")
       .update({
         status: "completed",
-        overall_score: debrief.overall_score,
+        overall_score: overallScore,
         readiness_delta: readinessDelta,
         completed_at: new Date().toISOString(),
       })
       .eq("id", id);
+
+    const debrief = debriefResult;
 
     const allWeaknessTags = answeredQuestions.flatMap((q) => {
       const tags = q.feedback?.weakness_tags || [];
