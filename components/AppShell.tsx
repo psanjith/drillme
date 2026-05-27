@@ -85,10 +85,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </Link>
           )}
           {isPro === true && (
-            <div className="flex items-center gap-3 px-3 py-2 rounded-lg">
-              <Crown size={16} className="text-amber-400" />
-              <span className="text-amber-400 text-sm font-medium">Pro</span>
-            </div>
+            <button
+              onClick={async () => {
+                const res = await fetch("/api/billing/portal", { method: "POST" });
+                const data = await res.json();
+                if (data.url) window.location.href = data.url;
+              }}
+              className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-amber-400 hover:text-amber-300 hover:bg-amber-400/5 transition-all w-full"
+            >
+              <Crown size={16} />
+              Manage subscription
+            </button>
           )}
           <div className="flex items-center gap-2 px-3 py-1">
             <ThemeToggle />
