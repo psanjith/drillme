@@ -14,6 +14,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState("");
 
   async function handleSignup(e: React.FormEvent) {
@@ -93,13 +94,28 @@ export default function SignupPage() {
               required
             />
 
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 flex-shrink-0"
+              />
+              <span className="text-xs text-slate-400 leading-relaxed">
+                I agree to the{" "}
+                <Link href="/terms" className="text-blue-400 hover:text-blue-300">Terms of Service</Link>
+                {" "}and{" "}
+                <Link href="/privacy" className="text-blue-400 hover:text-blue-300">Privacy Policy</Link>
+              </span>
+            </label>
+
             {error && (
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2 text-red-400 text-sm">
                 {error}
               </div>
             )}
 
-            <Button type="submit" loading={loading} className="w-full mt-1">
+            <Button type="submit" loading={loading} disabled={!agreed} className="w-full mt-1">
               Create account
             </Button>
           </form>

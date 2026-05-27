@@ -409,9 +409,12 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
                 <h2 className="text-xl font-bold text-foreground mb-2">Interview complete</h2>
                 <p className="text-slate-400 text-sm mb-6">Great work. Let&apos;s see how you did.</p>
                 <Button onClick={handleComplete} loading={completing} size="lg">
-                  View debrief
-                  <ChevronRight size={16} />
+                  {completing ? "Generating debrief…" : "View debrief"}
+                  {!completing && <ChevronRight size={16} />}
                 </Button>
+                {completing && (
+                  <p className="text-slate-500 text-xs mt-3">Analysing your answers — takes about 10 seconds</p>
+                )}
               </div>
             </div>
           )}

@@ -33,6 +33,13 @@ export default function InterviewSetupPage() {
   const [jd, setJd] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [speechWarning, setSpeechWarning] = useState(false);
+
+  useEffect(() => {
+    const noSpeechRecognition = !("SpeechRecognition" in window || "webkitSpeechRecognition" in window);
+    const noSpeechSynthesis = !("speechSynthesis" in window);
+    if (noSpeechRecognition || noSpeechSynthesis) setSpeechWarning(true);
+  }, []);
 
   const [form, setForm] = useState({
     company: "",
@@ -98,6 +105,15 @@ export default function InterviewSetupPage() {
   return (
     <AppShell>
       <div className="max-w-2xl mx-auto px-6 py-8">
+        {speechWarning && (
+          <div className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/8 px-5 py-4 flex items-start gap-3">
+            <svg className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" /></svg>
+            <div>
+              <p className="text-amber-400 text-sm font-medium">Voice not supported in this browser</p>
+              <p className="text-slate-400 text-xs mt-0.5">DrillMe uses the Web Speech API for voice interviews. Use Chrome or Edge on desktop for the full experience.</p>
+            </div>
+          </div>
+        )}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-foreground mb-1">Start an interview</h1>
           <p className="text-slate-400 text-sm">Configure your practice session</p>

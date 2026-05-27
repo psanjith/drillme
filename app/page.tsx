@@ -55,8 +55,12 @@ export default function LandingPage() {
         </div>
       </main>
 
-      <footer className="border-t border-[var(--card-border)] px-6 py-4 text-center text-slate-600 text-xs tracking-wide">
-        Built for the offer. Not the algorithm.
+      <footer className="border-t border-[var(--card-border)] px-6 py-4 flex items-center justify-between text-xs text-slate-600">
+        <span className="tracking-wide">Built for the offer. Not the algorithm.</span>
+        <div className="flex items-center gap-4">
+          <Link href="/terms" className="hover:text-slate-400 transition-colors">Terms</Link>
+          <Link href="/privacy" className="hover:text-slate-400 transition-colors">Privacy</Link>
+        </div>
       </footer>
     </div>
   );

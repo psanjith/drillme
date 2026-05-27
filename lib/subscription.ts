@@ -34,7 +34,7 @@ export async function getMonthlySessionCount(
     .from("sessions")
     .select("id", { count: "exact", head: true })
     .eq("user_id", userId)
-    .in("status", ["active", "completed"])
+    .eq("status", "completed")
     .gte("created_at", startOfMonth.toISOString());
 
   return count ?? 0;
