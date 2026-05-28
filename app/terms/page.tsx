@@ -66,7 +66,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-foreground font-semibold text-base mb-3">11. Contact</h2>
-            <p>Questions about these terms? Contact us at <a href="mailto:support@drillme.app" className="text-blue-400 hover:text-blue-300">support@drillme.app</a></p>
+            <p>Questions about these terms? Contact us at <a href="mailto:drillme26@gmail.com" className="text-blue-400 hover:text-blue-300">drillme26@gmail.com</a></p>
           </section>
         </div>
 

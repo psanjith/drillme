@@ -61,7 +61,7 @@ export default function PrivacyPage() {
               <li>Request deletion of your account and associated data</li>
               <li>Export your interview history</li>
             </ul>
-            <p className="mt-2">To exercise these rights, email <a href="mailto:support@drillme.app" className="text-blue-400 hover:text-blue-300">support@drillme.app</a></p>
+            <p className="mt-2">To exercise these rights, email <a href="mailto:drillme26@gmail.com" className="text-blue-400 hover:text-blue-300">drillme26@gmail.com</a></p>
           </section>
 
           <section>
@@ -76,7 +76,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-foreground font-semibold text-base mb-3">9. Contact</h2>
-            <p>Privacy questions or data requests: <a href="mailto:support@drillme.app" className="text-blue-400 hover:text-blue-300">support@drillme.app</a></p>
+            <p>Privacy questions or data requests: <a href="mailto:drillme26@gmail.com" className="text-blue-400 hover:text-blue-300">drillme26@gmail.com</a></p>
           </section>
         </div>
 
