@@ -12,12 +12,10 @@ import {
   MessageSquare,
   Briefcase,
   LogOut,
-  Crown,
   Menu,
   X,
   Settings,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -30,14 +28,7 @@ const navItems = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [isPro, setIsPro] = useState<boolean | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    fetch("/api/billing/status")
-      .then((r) => r.json())
-      .then((d) => setIsPro(d.isPro ?? false));
-  }, []);
 
   useEffect(() => {
     setSidebarOpen(false);
@@ -85,28 +76,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </nav>
 
       <div className="px-3 py-4 border-t border-[var(--card-border)] flex flex-col gap-1">
-        {isPro === false && (
-          <Link
-            href="/upgrade"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-amber-400 hover:text-amber-300 hover:bg-amber-400/5 transition-all"
-          >
-            <Crown size={16} />
-            Upgrade to Pro
-          </Link>
-        )}
-        {isPro === true && (
-          <button
-            onClick={async () => {
-              const res = await fetch("/api/billing/portal", { method: "POST" });
-              const data = await res.json();
-              if (data.url) window.location.href = data.url;
-            }}
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-amber-400 hover:text-amber-300 hover:bg-amber-400/5 transition-all w-full"
-          >
-            <Crown size={16} />
-            Manage subscription
-          </button>
-        )}
         <Link
           href="/settings"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all"
@@ -114,9 +83,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Settings size={16} />
           Settings
         </Link>
-        <div className="flex items-center gap-2 px-3 py-1">
-          <ThemeToggle />
-        </div>
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:text-slate-300 hover:bg-white/5 w-full transition-all"
