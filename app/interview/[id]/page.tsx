@@ -82,7 +82,11 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
       if (cancelled) return;
 
       if (data.error) {
-        setError(data.error);
+        setError(
+          data.error === "ai_unavailable"
+            ? "Our AI is busy right now. Please wait a moment and refresh to try again."
+            : data.error
+        );
         setState("error" as InterviewState);
         return;
       }
@@ -160,7 +164,11 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
       if (data.error) {
         submittingRef.current = false;
         setState("question");
-        setError(data.error);
+        setError(
+          data.error === "ai_unavailable"
+            ? "Our AI is busy right now — please wait a moment and try again."
+            : data.error
+        );
         return;
       }
 

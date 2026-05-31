@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { generateNextQuestion } from "@/lib/gemini/prompts";
+import { AIUnavailableError } from "@/lib/gemini/client";
 
 export async function POST(
   request: Request,
@@ -77,6 +78,8 @@ export async function POST(
 
     return NextResponse.json({ session, question: sessionQuestion });
   } catch (err) {
+    if (err instanceof AIUnavailableError)
+      return NextResponse.json({ error: "ai_unavailable" }, { status: 503 });
     const msg = err instanceof Error ? err.message : String(err);
     console.error("Start session error:", err);
     return NextResponse.json({ error: msg }, { status: 500 });

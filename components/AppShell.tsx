@@ -15,6 +15,7 @@ import {
   Crown,
   Menu,
   X,
+  Settings,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
@@ -106,6 +107,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             Manage subscription
           </button>
         )}
+        <Link
+          href="/settings"
+          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all"
+        >
+          <Settings size={16} />
+          Settings
+        </Link>
         <div className="flex items-center gap-2 px-3 py-1">
           <ThemeToggle />
         </div>

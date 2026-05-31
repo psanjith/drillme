@@ -41,7 +41,7 @@ export default function OnboardingPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      router.push("/dashboard");
+      router.push("/interview/setup");
     } catch {
       setLoading(false);
     }
@@ -175,7 +175,7 @@ export default function OnboardingPage() {
 
           {isLast ? (
             <Button loading={loading} onClick={handleFinish}>
-              Go to dashboard
+              Start my first interview
             </Button>
           ) : (
             <Button onClick={() => setStep((s) => s + 1)} disabled={!current.canNext}>
