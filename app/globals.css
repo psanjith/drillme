@@ -5,7 +5,7 @@
   --foreground: #f1f5f9;
   --card: #1a1f2e;
   --card-border: #2a3040;
-  --muted: #64748b;
+  --muted: #7c889b;
   --accent-blue: #3b82f6;
   --accent-green: #22c55e;
   --accent-amber: #f59e0b;
@@ -66,3 +66,10 @@ a { color: inherit; text-decoration: none; }
 [data-theme="light"] .bg-green-500 {
   color: #ffffff !important;
 }
+
+/* Dark mode — lift the dim secondary greys so captions stay readable
+   on the dark background (slate-500/600 default to ~2.5–4:1 contrast).
+   Brightness hierarchy preserved: 400 > 500 > 600. */
+[data-theme="dark"] .text-slate-400 { color: #a3aec0 !important; }
+[data-theme="dark"] .text-slate-500 { color: #909cae !important; }
+[data-theme="dark"] .text-slate-600 { color: #7e8a9c !important; }
