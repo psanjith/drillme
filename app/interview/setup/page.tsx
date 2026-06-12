@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/Button";
@@ -26,7 +26,7 @@ const PANELLISTS: { value: PanellistPersona; label: string; desc: string }[] = [
   { value: "peer_engineer", label: "Peer Engineer", desc: "Collaboration" },
 ];
 
-export default function InterviewSetupPage() {
+function InterviewSetupInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [mode, setMode] = useState<"jd" | "quick">("jd");
@@ -271,5 +271,13 @@ export default function InterviewSetupPage() {
         </Button>
       </div>
     </AppShell>
+  );
+}
+
+export default function InterviewSetupPage() {
+  return (
+    <Suspense fallback={<AppShell><div className="flex items-center justify-center h-full"><div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" /></div></AppShell>}>
+      <InterviewSetupInner />
+    </Suspense>
   );
 }

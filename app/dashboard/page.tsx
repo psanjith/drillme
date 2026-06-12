@@ -124,7 +124,7 @@ export default function DashboardPage() {
                       contentStyle={{ backgroundColor: "#1a1f2e", border: "1px solid #2a3040", borderRadius: "8px" }}
                       labelStyle={{ color: "#94a3b8", fontSize: "11px" }}
                       itemStyle={{ color: "#3b82f6", fontSize: "12px" }}
-                      formatter={(value: number) => [`${Math.round(value)} / 100`, "Readiness"]}
+                      formatter={(value) => [`${Math.round(Number(value))} / 100`, "Readiness"]}
                     />
                     <Line
                       type="monotone"

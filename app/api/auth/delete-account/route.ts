@@ -9,11 +9,14 @@ export async function DELETE() {
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     // Delete user data in order (session_questions first due to FK)
-    await supabase.from("session_questions")
-      .delete()
-      .in("session_id",
-        supabase.from("sessions").select("id").eq("user_id", user.id)
-      );
+    const { data: userSessions } = await supabase
+      .from("sessions")
+      .select("id")
+      .eq("user_id", user.id);
+    const sessionIds = (userSessions || []).map((s) => s.id);
+    if (sessionIds.length > 0) {
+      await supabase.from("session_questions").delete().in("session_id", sessionIds);
+    }
     await supabase.from("sessions").delete().eq("user_id", user.id);
     await supabase.from("weakness_profile").delete().eq("user_id", user.id);
     await supabase.from("speaking_sessions").delete().eq("user_id", user.id);
