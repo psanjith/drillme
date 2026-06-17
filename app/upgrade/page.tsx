@@ -25,12 +25,17 @@ export default function UpgradePage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [cycle, setCycle] = useState<"monthly" | "annual">("annual");
 
   async function handleUpgrade() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/billing/checkout", { method: "POST" });
+      const res = await fetch("/api/billing/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan: cycle }),
+      });
       const data = await res.json();
       if (data.error) { setError(data.error); setLoading(false); return; }
       window.location.href = data.url;
@@ -50,6 +55,26 @@ export default function UpgradePage() {
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-3">Unlock your full potential</h1>
           <p className="text-slate-400">Everything you need to walk into any interview prepared.</p>
+        </div>
+
+        {/* Billing cycle toggle */}
+        <div className="flex items-center justify-center mb-8">
+          <div className="inline-flex items-center bg-[var(--card)] border border-[var(--card-border)] rounded-lg p-1">
+            {(["monthly", "annual"] as const).map((c) => (
+              <button
+                key={c}
+                onClick={() => setCycle(c)}
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
+                  cycle === c ? "bg-blue-500 text-white" : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                {c === "monthly" ? "Monthly" : "Annual"}
+                {c === "annual" && (
+                  <span className={`ml-2 text-xs ${cycle === c ? "text-white/80" : "text-green-400"}`}>2 months free</span>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-8">
@@ -73,10 +98,13 @@ export default function UpgradePage() {
               Recommended
             </div>
             <p className="text-blue-400 text-sm font-medium mb-1">Pro</p>
-            <div className="flex items-baseline gap-1 mb-6">
-              <p className="text-3xl font-bold text-foreground">$15</p>
-              <p className="text-slate-400 text-sm">/month</p>
+            <div className="flex items-baseline gap-1 mb-1">
+              <p className="text-3xl font-bold text-foreground">{cycle === "annual" ? "$150" : "$15"}</p>
+              <p className="text-slate-400 text-sm">{cycle === "annual" ? "/year" : "/month"}</p>
             </div>
+            <p className="text-xs text-slate-500 mb-5 h-4">
+              {cycle === "annual" ? "$12.50/mo, billed yearly" : " "}
+            </p>
             <ul className="space-y-3">
               {PRO_FEATURES.map((f) => (
                 <li key={f} className="flex items-start gap-2.5 text-sm text-slate-200">
@@ -99,7 +127,9 @@ export default function UpgradePage() {
           disabled={loading}
           className="w-full bg-blue-500 hover:bg-blue-600 disabled:opacity-60 text-white font-medium py-3.5 rounded-xl transition-colors text-base"
         >
-          {loading ? "Redirecting to checkout..." : "Upgrade to Pro"}
+          {loading
+            ? "Redirecting to checkout..."
+            : cycle === "annual" ? "Upgrade to Pro — $150/year" : "Upgrade to Pro — $15/month"}
         </button>
 
         <p className="text-center text-slate-500 text-xs mt-4">

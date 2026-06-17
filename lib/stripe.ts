@@ -26,14 +26,15 @@ export async function getOrCreateCustomer(
 export async function createCheckoutSession(
   customerId: string,
   successUrl: string,
-  cancelUrl: string
+  cancelUrl: string,
+  priceId: string = process.env.STRIPE_PRICE_ID!
 ): Promise<string> {
   const res = await fetch(`${STRIPE_API}/checkout/sessions`, {
     method: "POST",
     headers: headers(),
     body: new URLSearchParams({
       customer: customerId,
-      "line_items[0][price]": process.env.STRIPE_PRICE_ID!,
+      "line_items[0][price]": priceId,
       "line_items[0][quantity]": "1",
       mode: "subscription",
       success_url: successUrl,

@@ -12,6 +12,11 @@ export async function POST(request: Request) {
     const { isPro, stripeCustomerId } = await getSubscription(supabase, user.id);
     if (isPro) return NextResponse.json({ error: "Already subscribed" }, { status: 400 });
 
+    const { plan } = await request.json().catch(() => ({ plan: "monthly" }));
+    const priceId = plan === "annual"
+      ? process.env.STRIPE_PRICE_ID_ANNUAL!
+      : process.env.STRIPE_PRICE_ID!;
+
     const origin = request.headers.get("origin") || "http://localhost:3000";
     const customerId = await getOrCreateCustomer(user.email!, user.id, stripeCustomerId);
 
@@ -25,7 +30,8 @@ export async function POST(request: Request) {
     const url = await createCheckoutSession(
       customerId,
       `${origin}/dashboard?upgraded=1`,
-      `${origin}/upgrade`
+      `${origin}/upgrade`,
+      priceId
     );
 
     return NextResponse.json({ url });
