@@ -73,3 +73,10 @@ a { color: inherit; text-decoration: none; }
 [data-theme="dark"] .text-slate-400 { color: #a3aec0 !important; }
 [data-theme="dark"] .text-slate-500 { color: #909cae !important; }
 [data-theme="dark"] .text-slate-600 { color: #7e8a9c !important; }
+
+/* Spotlight hero animation (used by components/ui/spotlight.tsx) */
+@keyframes spotlight {
+  0%   { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
+  100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
+}
+.animate-spotlight { animation: spotlight 2s ease 0.75s 1 forwards; }
