@@ -5,7 +5,8 @@ import { AppShell } from "@/components/AppShell";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Crown } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import { Crown, LogOut } from "lucide-react";
 
 export default function SettingsPage() {
   const [isPro, setIsPro] = useState<boolean | null>(null);
@@ -18,6 +19,12 @@ export default function SettingsPage() {
       .then((r) => r.json())
       .then((d) => setIsPro(d.isPro ?? false));
   }, []);
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    window.location.href = "/login";
+  }
 
   async function handleDelete() {
     if (confirm !== "DELETE") return;
@@ -78,6 +85,16 @@ export default function SettingsPage() {
                 </button>
               </>
             )}
+          </Card>
+
+          {/* Account */}
+          <Card className="p-6">
+            <h2 className="text-foreground font-semibold mb-1">Account</h2>
+            <p className="text-slate-400 text-sm mb-4">Sign out of your account on this device.</p>
+            <Button variant="secondary" onClick={handleLogout}>
+              <LogOut size={15} />
+              Log out
+            </Button>
           </Card>
 
           {/* Delete account */}
