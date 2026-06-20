@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   Settings,
+  Crown,
 } from "lucide-react";
 
 const navItems = [
@@ -29,10 +30,18 @@ const navItems = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isPro, setIsPro] = useState<boolean | null>(null);
 
   useEffect(() => {
     setSidebarOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    fetch("/api/billing/status")
+      .then((r) => r.json())
+      .then((d) => setIsPro(d.isPro ?? false))
+      .catch(() => setIsPro(false));
+  }, []);
 
   async function handleLogout() {
     const supabase = createClient();
@@ -76,6 +85,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </nav>
 
       <div className="px-3 py-4 border-t border-[var(--card-border)] flex flex-col gap-1">
+        {isPro === false && (
+          <Link
+            href="/upgrade"
+            className="mb-2 block rounded-xl border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/15 px-3.5 py-3 transition-all"
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <Crown size={15} className="text-blue-400" />
+              <span className="text-foreground text-sm font-semibold">Upgrade to Pro</span>
+            </div>
+            <p className="text-slate-400 text-xs leading-snug">Unlimited interviews & full feedback.</p>
+          </Link>
+        )}
+        {isPro === true && (
+          <Link
+            href="/settings"
+            className="mb-1 flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-amber-400 hover:bg-white/5 transition-all"
+          >
+            <Crown size={15} />
+            <span className="font-medium">Pro</span>
+          </Link>
+        )}
         <Link
           href="/settings"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-500 hover:text-slate-300 hover:bg-white/5 transition-all"
