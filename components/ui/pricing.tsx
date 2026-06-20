@@ -37,7 +37,7 @@ function Star({
   const [initialPos] = useState({
     top: `${Math.random() * 100}%`,
     left: `${Math.random() * 100}%`,
-    size: 1 + Math.random() * 2,
+    size: 1.5 + Math.random() * 2.5,
     duration: 2 + Math.random() * 3,
     delay: Math.random() * 5,
   });
@@ -83,8 +83,8 @@ function Star({
         x: springX,
         y: springY,
       }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 0.8, 0] }}
+      initial={{ opacity: 0.4 }}
+      animate={{ opacity: [0.4, 1, 0.4] }}
       transition={{ duration: initialPos.duration, repeat: Infinity, delay: initialPos.delay }}
     />
   );
@@ -98,8 +98,8 @@ function InteractiveStarfield({
   containerRef: React.RefObject<HTMLDivElement | null>;
 }) {
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none opacity-60">
-      {Array.from({ length: 60 }).map((_, i) => (
+    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+      {Array.from({ length: 90 }).map((_, i) => (
         <Star key={`star-${i}`} mousePosition={mousePosition} containerRef={containerRef} />
       ))}
     </div>
