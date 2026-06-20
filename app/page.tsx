@@ -131,9 +131,9 @@ export default function LandingPage() {
       </main>
 
       <footer className="border-t border-[var(--card-border)] px-6 py-4 text-xs text-slate-600">
-        <div className="relative flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3 text-center sm:relative sm:flex-row sm:justify-center sm:gap-0">
           <span className="tracking-wide">Built for the offer. Not the algorithm.</span>
-          <div className="absolute right-0 flex items-center gap-4">
+          <div className="flex items-center gap-4 sm:absolute sm:right-0">
             <Link href="/terms" className="hover:text-slate-400 transition-colors">Terms</Link>
             <Link href="/privacy" className="hover:text-slate-400 transition-colors">Privacy</Link>
           </div>
