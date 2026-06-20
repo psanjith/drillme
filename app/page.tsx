@@ -2,6 +2,54 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { SplineScene } from "@/components/ui/splite";
 import { Spotlight } from "@/components/ui/spotlight";
+import { PricingSection, type PricingPlan } from "@/components/ui/pricing";
+
+const PRICING_PLANS: PricingPlan[] = [
+  {
+    name: "Free",
+    price: "0",
+    period: "month",
+    description: "Get a feel for it — on us.",
+    features: [
+      "3 interviews per month",
+      "Overall readiness score",
+      "Voice practice",
+    ],
+    buttonText: "Get started",
+    href: "/signup",
+  },
+  {
+    name: "Monthly",
+    price: "15",
+    period: "month",
+    description: "Everything, billed month to month.",
+    note: "Billed monthly · cancel any time",
+    features: [
+      "Unlimited interviews",
+      "Full per-question feedback & scores",
+      "Dashboard & readiness tracking",
+      "Weakness profile & trends",
+      "Drill mode & speaking coach",
+    ],
+    buttonText: "Start for free",
+    href: "/signup",
+  },
+  {
+    name: "Yearly",
+    price: "150",
+    period: "year",
+    description: "Everything, for less.",
+    note: "$12.50/mo · 2 months free",
+    features: [
+      "Everything in Monthly",
+      "Best value — save $30 a year",
+      "Priority access to new features",
+    ],
+    buttonText: "Start for free",
+    href: "/signup",
+    isPopular: true,
+  },
+];
 
 export default function LandingPage() {
   return (
@@ -74,6 +122,12 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
+
+        <PricingSection
+          plans={PRICING_PLANS}
+          title="Simple, honest pricing"
+          description="Start free. Upgrade when you're ready to go all in."
+        />
       </main>
 
       <footer className="border-t border-[var(--card-border)] px-6 py-4 text-xs text-slate-600">
