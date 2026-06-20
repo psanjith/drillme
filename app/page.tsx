@@ -21,21 +21,21 @@ export default function LandingPage() {
       <main className="flex-1 px-6 py-10">
         <div className="max-w-6xl mx-auto">
           {/* Hero — 3D Spline scene + spotlight */}
-          <div className="relative w-full overflow-hidden rounded-2xl border border-[var(--card-border)] bg-black/[0.96] h-auto md:h-[520px]">
-            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+          <div className="relative w-full overflow-hidden rounded-2xl border border-[var(--card-border)] bg-[var(--hero-bg)] h-auto md:h-[520px] transition-colors">
+            <Spotlight className="spotlight-themed -top-40 left-0 md:left-60 md:-top-20" />
 
             <div className="flex flex-col md:flex-row h-full">
               {/* Left — copy */}
               <div className="flex-1 p-8 md:p-12 relative z-10 flex flex-col justify-center">
-                <p className="text-neutral-400 text-xs font-semibold tracking-[0.25em] uppercase mb-5">
+                <p className="text-xs font-semibold tracking-[0.25em] uppercase mb-5" style={{ color: "var(--hero-body)" }}>
                   Prep · Perform · Peak
                 </p>
-                <h1 className="text-4xl md:text-5xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight bg-clip-text text-transparent bg-gradient-to-b from-[var(--hero-fg-from)] to-[var(--hero-fg-to)]">
                   Interview prep that
                   <br />
                   actually works
                 </h1>
-                <p className="mt-4 text-neutral-300 max-w-md leading-relaxed">
+                <p className="mt-4 max-w-md leading-relaxed" style={{ color: "var(--hero-body)" }}>
                   Practice with realistic AI panellists, get instant structured feedback,
                   and walk into your next interview prepared.
                 </p>
@@ -43,7 +43,7 @@ export default function LandingPage() {
                   <Link href="/signup" className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-lg transition-colors">
                     Start for free
                   </Link>
-                  <Link href="/login" className="text-neutral-300 hover:text-white font-medium px-2 transition-colors">
+                  <Link href="/login" className="font-medium px-2 transition-colors hover:opacity-70" style={{ color: "var(--hero-fg-from)" }}>
                     Sign in
                   </Link>
                 </div>

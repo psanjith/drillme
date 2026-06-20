@@ -80,3 +80,22 @@ a { color: inherit; text-decoration: none; }
   100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
 }
 .animate-spotlight { animation: spotlight 2s ease 0.75s 1 forwards; }
+
+/* Theme-aware hero (3D Spline card) — dark by default, inverts in light mode.
+   :root holds the dark values; [data-theme="light"] overrides (later = wins). */
+:root {
+  --hero-bg: #050608;
+  --hero-fg-from: #fafafa;
+  --hero-fg-to: #a3a3a3;
+  --hero-body: #d4d4d8;
+  --hero-spotlight: #ffffff;
+}
+[data-theme="light"] {
+  --hero-bg: #eef0f4;
+  --hero-fg-from: #0a0a0a;
+  --hero-fg-to: #52525b;
+  --hero-body: #3f3f46;
+  --hero-spotlight: #3b82f6;
+}
+/* CSS `fill` overrides the SVG presentation attribute, so the spotlight tints per theme */
+.spotlight-themed ellipse { fill: var(--hero-spotlight); }
