@@ -10,13 +10,14 @@ export async function GET() {
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const [sessionsResult, weaknessResult] = await Promise.all([
+      // All completed sessions (bounded) so totals/streak are accurate, not capped at 30.
       supabase
         .from("sessions")
         .select("*")
         .eq("user_id", user.id)
         .eq("status", "completed")
         .order("completed_at", { ascending: false })
-        .limit(30),
+        .limit(1000),
       supabase
         .from("weakness_profile")
         .select("*")
@@ -28,30 +29,40 @@ export async function GET() {
     const sessions = sessionsResult.data || [];
     const weaknesses = weaknessResult.data || [];
 
-    const latestScore = sessions[0]?.overall_score || 0;
+    // Most recent session that actually has a score.
+    const scored = sessions.filter((s) => s.overall_score != null);
+    const latestScore = scored.length > 0 ? Math.round(scored[0].overall_score) : 0;
 
-    const readinessHistory = sessions
-      .slice()
+    // Chart: most recent 30 scored sessions, in chronological order.
+    const readinessHistory = scored
+      .slice(0, 30)
       .reverse()
-      .filter((s) => s.overall_score != null)
       .map((s) => ({
         date: s.completed_at?.split("T")[0] || "",
         score: Math.round(s.overall_score),
       }));
 
+    // Total practice time across ALL completed sessions.
     const totalMinutes = sessions.reduce((sum, s) => {
       if (s.started_at && s.completed_at) {
         const actual = Math.round(
           (new Date(s.completed_at).getTime() - new Date(s.started_at).getTime()) / 60000
         );
-        return sum + Math.min(actual, s.duration_minutes || 60);
+        // Guard against clock skew (negative) and tab-left-open inflation (cap at planned duration).
+        return sum + Math.max(0, Math.min(actual, s.duration_minutes || 60));
       }
       return sum + (s.duration_minutes || 0);
     }, 0);
 
     const streak = calculateStreak(sessions);
 
-    const recommendations = await generateDrillRecommendations(weaknesses);
+    // AI recommendations are non-essential — never let an AI hiccup blank the dashboard.
+    let recommendations: string[] = [];
+    try {
+      recommendations = await generateDrillRecommendations(weaknesses);
+    } catch (err) {
+      console.error("Drill recommendations unavailable:", err);
+    }
 
     return NextResponse.json({
       readiness_score: latestScore,
