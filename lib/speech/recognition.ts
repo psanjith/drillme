@@ -25,12 +25,20 @@ declare global {
   }
 }
 
+// Errors that are benign / expected and should not surface as failures.
+const IGNORED_ERRORS = new Set(["no-speech", "aborted"]);
+
+function squash(...parts: string[]): string {
+  return parts.join(" ").replace(/\s+/g, " ").trim();
+}
+
 export class SpeechRecognitionManager {
   private recognition: BrowserSpeechRecognition | null = null;
   private options: RecognitionOptions;
-  private finalTranscript = "";
-  private listening = false; // user intent: should we be recording?
-  private active = false;    // is the browser engine actually running right now?
+  private committed = "";     // text finalized in PREVIOUS recognition sessions (survives restarts)
+  private sessionFinal = "";  // text finalized in the CURRENT session
+  private listening = false;  // user intent: should we be recording?
+  private active = false;     // is the browser engine actually running right now?
 
   constructor(options: RecognitionOptions) {
     this.options = options;
@@ -55,32 +63,40 @@ export class SpeechRecognitionManager {
 
     this.recognition.onresult = (event) => {
       let interim = "";
-      this.finalTranscript = "";
+      let sessionFinal = "";
 
       for (let i = 0; i < event.results.length; i++) {
         const result = event.results[i];
         if (result.isFinal) {
-          this.finalTranscript += result[0].transcript + " ";
+          sessionFinal += result[0].transcript + " ";
         } else {
           interim += result[0].transcript;
         }
       }
 
-      const combined = (this.finalTranscript + interim).trim();
-      this.options.onTranscript(combined, false);
+      this.sessionFinal = sessionFinal;
+      // Combine text finalized in earlier sessions with this session's text.
+      this.options.onTranscript(squash(this.committed, sessionFinal, interim), false);
     };
 
     this.recognition.onerror = (event) => {
-      if (event.error === "no-speech") return;
+      if (IGNORED_ERRORS.has(event.error)) return;
       this.listening = false;
       this.active = false;
       this.options.onStateChange("error");
       this.options.onError(`Recognition error: ${event.error}`);
     };
 
-    // Chrome stops recognition after silence — restart automatically if still meant to be listening
+    // Chrome stops recognition after silence — restart automatically if still
+    // meant to be listening, preserving everything finalized so far.
     this.recognition.onend = () => {
       this.active = false;
+      // Fold this session's finalized text into the running transcript before restarting.
+      if (this.sessionFinal.trim()) {
+        this.committed = squash(this.committed, this.sessionFinal);
+      }
+      this.sessionFinal = "";
+
       if (this.listening) {
         try {
           this.active = true;
@@ -102,7 +118,8 @@ export class SpeechRecognitionManager {
       return;
     }
     if (this.active) return; // already running, don't call start() again
-    this.finalTranscript = "";
+    this.committed = "";
+    this.sessionFinal = "";
     this.listening = true;
     this.active = true;
     this.recognition.start();
@@ -116,11 +133,11 @@ export class SpeechRecognitionManager {
       this.recognition.stop();
     }
     this.options.onStateChange("processing");
-    return this.finalTranscript.trim();
+    return this.getFinalTranscript();
   }
 
   getFinalTranscript(): string {
-    return this.finalTranscript.trim();
+    return squash(this.committed, this.sessionFinal);
   }
 
   isSupported(): boolean {
