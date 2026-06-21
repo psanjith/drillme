@@ -1,7 +1,7 @@
 
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { updateWeaknessProfile } from "@/lib/gemini/prompts";
+import { updateWeaknessProfile, generateDebrief } from "@/lib/gemini/prompts";
 
 export async function POST(
   request: Request,
@@ -137,6 +137,30 @@ export async function POST(
       }
     } catch (err) {
       console.error("Weakness profile update failed (non-fatal):", err);
+    }
+
+    // Generate a session-level written summary (strengths / focus / next steps).
+    // Best-effort and stored separately so a missing `debrief` column or an AI
+    // outage can never break completion.
+    try {
+      const summary = await generateDebrief({
+        sessionQuestions: answeredQuestions,
+        roleLevel: session.role_level,
+        company: session.company,
+      });
+      await supabase
+        .from("sessions")
+        .update({
+          debrief: {
+            top_strengths: summary.top_strengths ?? [],
+            top_weaknesses: summary.top_weaknesses ?? [],
+            readiness_summary: summary.readiness_summary ?? "",
+            next_steps: summary.next_steps ?? [],
+          },
+        })
+        .eq("id", id);
+    } catch (err) {
+      console.error("Debrief summary generation failed (non-fatal):", err);
     }
 
     return NextResponse.json({ session_id: id, overall_score: overallScore });

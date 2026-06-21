@@ -98,6 +98,14 @@ export interface Session {
   readiness_delta: number | null;
   started_at: string | null;
   completed_at: string | null;
+  debrief?: SessionDebrief | null;
+}
+
+export interface SessionDebrief {
+  top_strengths: string[];
+  top_weaknesses: string[];
+  readiness_summary: string;
+  next_steps: string[];
 }
 
 export interface WeaknessProfile {

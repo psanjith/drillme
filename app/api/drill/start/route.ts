@@ -1,6 +1,7 @@
 
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { withinRateLimit } from "@/lib/rate-limit";
 import { generateNextQuestion } from "@/lib/gemini/prompts";
 
 export async function POST() {
@@ -8,6 +9,10 @@ export async function POST() {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    if (!(await withinRateLimit(supabase, user.id, "ai", 20, 60))) {
+      return NextResponse.json({ error: "Too many requests — please slow down and try again in a moment." }, { status: 429 });
+    }
 
     const { data: profile } = await supabase
       .from("profiles")

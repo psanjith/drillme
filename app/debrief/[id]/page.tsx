@@ -207,6 +207,47 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
           </div>
         </div>
 
+        {isPro && session?.debrief && (
+          (session.debrief.readiness_summary ||
+            (session.debrief.top_strengths?.length ?? 0) > 0 ||
+            (session.debrief.next_steps?.length ?? 0) > 0) && (
+            <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-6 mb-8">
+              <h2 className="text-foreground font-semibold mb-3">Summary</h2>
+              {session.debrief.readiness_summary && (
+                <p className="text-slate-300 text-sm leading-relaxed mb-5">{session.debrief.readiness_summary}</p>
+              )}
+              <div className="grid sm:grid-cols-2 gap-5">
+                {(session.debrief.top_strengths?.length ?? 0) > 0 && (
+                  <div>
+                    <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">What you did well</p>
+                    <ul className="space-y-1.5">
+                      {session.debrief.top_strengths.map((s, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                          <span className="text-green-400 mt-0.5">+</span>
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {(session.debrief.next_steps?.length ?? 0) > 0 && (
+                  <div>
+                    <p className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2">Focus next</p>
+                    <ul className="space-y-1.5">
+                      {session.debrief.next_steps.map((s, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                          <span className="text-blue-400 mt-0.5">→</span>
+                          {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        )}
+
         <div className="mb-8">
           <h2 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-4">Questions & Feedback</h2>
           {!isPro && (
