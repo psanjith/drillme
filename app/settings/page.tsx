@@ -124,6 +124,13 @@ export default function SettingsPage() {
               Delete my account
             </Button>
           </Card>
+
+          {/* Legal */}
+          <div className="flex items-center justify-center gap-5 pt-2 text-xs text-slate-500">
+            <a href="/terms" className="hover:text-foreground transition-colors">Terms of Service</a>
+            <span className="text-[var(--card-border)]">·</span>
+            <a href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</a>
+          </div>
         </div>
       </div>
     </AppShell>
