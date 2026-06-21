@@ -33,7 +33,7 @@ function SeverityBar({ severity }: { severity: number }) {
   const color = severity >= 7 ? "bg-red-500" : severity >= 4 ? "bg-amber-500" : "bg-green-500";
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-1.5 bg-[#2a3040] rounded-full overflow-hidden">
+      <div className="flex-1 h-1.5 bg-[var(--card-border)] rounded-full overflow-hidden">
         <div className={`h-full ${color} rounded-full`} style={{ width: `${pct}%` }} />
       </div>
       <span className="text-xs text-slate-400 w-4">{severity}</span>
@@ -54,7 +54,8 @@ export default function WeaknessPage() {
         setProfile(data.profile || []);
         setRecommendations(data.recommendations || []);
         setLoading(false);
-      });
+      })
+      .catch(() => setLoading(false));
   }, []);
 
   const categories = ["all", "technical", "behavioural", "communication", "process"];

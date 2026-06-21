@@ -197,7 +197,7 @@ export default function DrillPage() {
                         <span className="text-slate-400 capitalize">{key.replace(/_/g, " ")}</span>
                         <span className="text-foreground">{val}/5</span>
                       </div>
-                      <div className="h-1.5 bg-[#2a3040] rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-[var(--card-border)] rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full ${(val as number) >= 4 ? "bg-green-500" : (val as number) >= 3 ? "bg-blue-500" : "bg-amber-500"}`}
                           style={{ width: `${((val as number) / 5) * 100}%` }}

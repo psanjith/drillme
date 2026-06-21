@@ -36,7 +36,7 @@ export default function DashboardPage() {
       setData(dash);
       setIsPro(billing.isPro ?? false);
       setLoading(false);
-    });
+    }).catch(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -122,8 +122,8 @@ export default function DashboardPage() {
                     <XAxis dataKey="date" tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} />
                     <YAxis domain={[0, 100]} tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} />
                     <Tooltip
-                      contentStyle={{ backgroundColor: "#1a1f2e", border: "1px solid #2a3040", borderRadius: "8px" }}
-                      labelStyle={{ color: "#94a3b8", fontSize: "11px" }}
+                      contentStyle={{ backgroundColor: "var(--card)", border: "1px solid var(--card-border)", borderRadius: "8px" }}
+                      labelStyle={{ color: "var(--muted)", fontSize: "11px" }}
                       itemStyle={{ color: "#3b82f6", fontSize: "12px" }}
                       formatter={(value) => [`${Math.round(Number(value))} / 100`, "Readiness"]}
                     />
@@ -161,7 +161,7 @@ export default function DashboardPage() {
                           <p className="text-slate-300 text-xs truncate">{w.tag}</p>
                           <TrendIcon size={11} className={TREND_COLORS[w.trend]} />
                         </div>
-                        <div className="h-1 bg-[#2a3040] rounded-full overflow-hidden">
+                        <div className="h-1 bg-[var(--card-border)] rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${w.severity >= 7 ? "bg-red-500" : w.severity >= 4 ? "bg-amber-500" : "bg-green-500"}`}
                             style={{ width: `${(w.severity / 10) * 100}%` }}

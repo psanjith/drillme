@@ -40,7 +40,7 @@ export function PanellistAvatar({ persona, speaking = false, size = "md" }: Pane
       <div className={`
         ${sizeClasses[size]} rounded-full border-2 flex items-center justify-center font-bold flex-shrink-0
         ${config.color}
-        ${speaking ? "ring-2 ring-offset-1 ring-offset-[#0f1117] ring-green-400" : ""}
+        ${speaking ? "ring-2 ring-offset-1 ring-offset-[var(--background)] ring-green-400" : ""}
       `}>
         {config.abbrev}
       </div>

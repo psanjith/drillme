@@ -194,7 +194,7 @@ export default function JobTargetsPage() {
                       <span className="text-slate-400 text-xs">Readiness</span>
                       <span className="text-slate-300 text-xs font-medium">{target.readiness}%</span>
                     </div>
-                    <div className="h-2 bg-[#2a3040] rounded-full overflow-hidden">
+                    <div className="h-2 bg-[var(--card-border)] rounded-full overflow-hidden">
                       <div
                         className={`h-full ${readinessBarColor(target.readiness)} transition-all duration-500`}
                         style={{ width: `${target.readiness}%` }}

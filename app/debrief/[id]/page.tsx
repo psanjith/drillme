@@ -17,7 +17,7 @@ function ScoreBar({ label, score }: { label: string; score: number }) {
         <span className="text-slate-400">{label}</span>
         <span className="text-foreground font-medium">{score}/5</span>
       </div>
-      <div className="h-1.5 bg-[#2a3040] rounded-full overflow-hidden">
+      <div className="h-1.5 bg-[var(--card-border)] rounded-full overflow-hidden">
         <div className={`h-full ${color} rounded-full transition-all`} style={{ width: `${(score / 5) * 100}%` }} />
       </div>
     </div>
@@ -147,7 +147,8 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
         setQuestions(data.questions || []);
         setIsPro(data.isPro ?? false);
         setLoading(false);
-      });
+      })
+      .catch(() => setLoading(false));
   }, [id]);
 
   if (loading) {
