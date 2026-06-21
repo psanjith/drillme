@@ -167,20 +167,20 @@ export default function DebriefPage({ params }: { params: Promise<{ id: string }
   return (
     <AppShell>
       <div className="max-w-3xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-2xl font-bold text-foreground mb-1">Interview Debrief</h1>
             <p className="text-slate-400 text-sm">
               {session?.company || "Practice"} · {session?.role_level} · {session?.interview_type}
             </p>
           </div>
-          <Link href="/interview/setup">
+          <Link href="/interview/setup" className="flex-shrink-0">
             <Button variant="secondary">New interview</Button>
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mb-8">
-          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5 col-span-1">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-8">
+          <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5 col-span-2 sm:col-span-1">
             <p className="text-slate-400 text-xs mb-1">Readiness score</p>
             <p className={`text-4xl font-bold ${scoreColor}`}>{avgScore}</p>
             <p className="text-slate-500 text-xs mt-1">out of 100</p>

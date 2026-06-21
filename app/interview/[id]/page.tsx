@@ -275,24 +275,25 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="min-h-screen bg-[var(--background)] flex flex-col">
-      <header className="border-b border-[var(--card-border)] px-6 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="DrillMe" className="w-7 h-7 rounded object-contain" />
-          <span className="text-foreground font-medium text-sm">
+      <header className="border-b border-[var(--card-border)] px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <img src="/logo.png" alt="DrillMe" className="w-7 h-7 rounded object-contain flex-shrink-0" />
+          <span className="text-foreground font-medium text-sm truncate">
             {session?.company ? `${session.company} Interview` : "Practice Interview"}
           </span>
           {session && (
-            <Badge variant="blue">{session.interview_type}</Badge>
+            <Badge variant="blue" className="hidden sm:inline-flex flex-shrink-0">{session.interview_type}</Badge>
           )}
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-32 h-1.5 bg-[#2a3040] rounded-full overflow-hidden">
+        <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+          <div className="hidden sm:flex items-center gap-2">
+            <div className="w-32 h-1.5 bg-[var(--card-border)] rounded-full overflow-hidden">
               <div className={`h-full ${timeColor} transition-all`} style={{ width: `${timeProgress * 100}%` }} />
             </div>
             <span className="text-slate-400 text-xs font-mono">{formatTime(elapsed)}</span>
           </div>
+          <span className="sm:hidden text-slate-400 text-xs font-mono">{formatTime(elapsed)}</span>
           <button
             onClick={() => {
               stopSpeaking();
@@ -302,15 +303,16 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
               setIsRecording(false);
               setSessionOver(true);
             }}
-            className="text-slate-500 hover:text-red-400 text-xs border border-[var(--card-border)] hover:border-red-500/40 px-3 py-1.5 rounded-lg transition-colors"
+            className="text-slate-500 hover:text-red-400 text-xs border border-[var(--card-border)] hover:border-red-500/40 px-3 py-1.5 rounded-lg transition-colors flex-shrink-0"
           >
-            End interview
+            <span className="hidden sm:inline">End interview</span>
+            <span className="sm:hidden">End</span>
           </button>
         </div>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="flex-1 flex flex-col p-6 max-w-3xl mx-auto w-full">
+        <div className="flex-1 flex flex-col p-4 sm:p-6 max-w-3xl mx-auto w-full">
           {error && (
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 text-red-400 text-sm mb-4 flex items-center justify-between">
               {error}

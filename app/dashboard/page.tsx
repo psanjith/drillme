@@ -56,31 +56,32 @@ export default function DashboardPage() {
     <AppShell>
       <div className="px-6 py-8 max-w-5xl mx-auto">
         {isPro === false && (
-          <div className="mb-6 rounded-xl border border-blue-500/30 bg-blue-500/8 px-5 py-4 flex items-center justify-between gap-4">
+          <div className="mb-6 rounded-xl border border-blue-500/30 bg-blue-500/8 px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <p className="text-foreground font-medium text-sm">Ready to practice?</p>
               <p className="text-slate-400 text-xs mt-0.5">Interviews are free — start a session and get real-time AI feedback.</p>
             </div>
             <Link
               href="/interview/setup"
-              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-shrink-0"
+              className="flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-shrink-0"
             >
               Start interview
               <ArrowRight size={14} />
             </Link>
           </div>
         )}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-8 gap-3">
           <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
-          <Link href="/interview/setup">
+          <Link href="/interview/setup" className="flex-shrink-0">
             <Button>
               <Mic size={15} />
-              New interview
+              <span className="hidden sm:inline">New interview</span>
+              <span className="sm:hidden">New</span>
             </Button>
           </Link>
         </div>
 
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
           <Card className="p-5">
             <p className="text-slate-400 text-xs mb-1">Readiness score</p>
             <p className={`text-4xl font-bold ${scoreColor}`}>{score || "—"}</p>
@@ -111,8 +112,8 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+          <div className="lg:col-span-2">
             <Card className="p-5">
               <p className="text-foreground text-sm font-medium mb-4">Readiness over time</p>
               {(data?.readiness_history || []).length > 1 ? (
@@ -194,7 +195,7 @@ export default function DashboardPage() {
           </Card>
         )}
 
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <Card className="p-5">
             <p className="text-foreground text-sm font-medium mb-3">Recent sessions</p>
             {(data?.recent_sessions || []).length === 0 ? (

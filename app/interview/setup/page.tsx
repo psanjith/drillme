@@ -190,7 +190,7 @@ function InterviewSetupInner() {
 
           <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
             <label className="text-sm font-medium text-slate-300 block mb-3">Interview Type</label>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               {TYPES.map((t) => (
                 <button
                   key={t.value}
