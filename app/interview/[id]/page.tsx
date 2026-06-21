@@ -38,6 +38,7 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
   const [sessionOver, setSessionOver] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState(true);
+  const [typingMode, setTypingMode] = useState(false);
 
   const recognitionRef = useRef<SpeechRecognitionManager | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -140,15 +141,11 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
     recognitionRef.current.start();
   }
 
-  async function stopRecording() {
-    if (!recognitionRef.current || !currentQuestion) return;
-    if (submittingRef.current) return;
+  async function submitAnswer(finalTranscript: string) {
+    if (!currentQuestion || submittingRef.current) return;
     submittingRef.current = true;
-    recognitionRef.current.stop();
     setIsRecording(false);
     setState("processing");
-
-    const finalTranscript = recognitionRef.current.getFinalTranscript() || transcript;
 
     try {
       const res = await fetch(`/api/sessions/${id}/answer`, {
@@ -195,6 +192,18 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
       setState("question");
       setError("Failed to submit answer. Please try again.");
     }
+  }
+
+  function stopRecording() {
+    if (!recognitionRef.current) return;
+    recognitionRef.current.stop();
+    const finalTranscript = recognitionRef.current.getFinalTranscript() || transcript;
+    submitAnswer(finalTranscript);
+  }
+
+  function submitTypedAnswer() {
+    stopSpeaking();
+    submitAnswer(transcript.trim());
   }
 
   async function handleHelp() {
@@ -352,24 +361,22 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
                   <VoiceVisualizer isRecording={isRecording} isSpeaking={isSpeaking} />
                 </div>
 
-                {transcript ? (
-                  <p className="text-slate-200 text-sm leading-relaxed whitespace-pre-wrap">{transcript}</p>
+                {typingMode || !voiceSupported ? (
+                  <textarea
+                    autoFocus
+                    placeholder="Type your answer here..."
+                    value={transcript}
+                    onChange={(e) => setTranscript(e.target.value)}
+                    disabled={state === "processing"}
+                    rows={5}
+                    className="w-full bg-transparent text-foreground text-sm leading-relaxed outline-none resize-none placeholder:text-slate-600 min-h-28"
+                  />
+                ) : transcript ? (
+                  <p className="text-foreground text-sm leading-relaxed whitespace-pre-wrap">{transcript}</p>
                 ) : (
                   <p className="text-slate-600 text-sm italic">
                     {isRecording ? "Listening..." : state === "processing" ? "Processing your answer..." : "Press the microphone button to start speaking"}
                   </p>
-                )}
-
-                {!voiceSupported && (
-                  <div className="mt-3">
-                    <textarea
-                      placeholder="Type your answer here..."
-                      value={transcript}
-                      onChange={(e) => setTranscript(e.target.value)}
-                      className="w-full bg-transparent text-slate-200 text-sm outline-none resize-none placeholder:text-slate-600"
-                      rows={4}
-                    />
-                  </div>
                 )}
               </div>
 
@@ -386,15 +393,27 @@ export default function InterviewRoomPage({ params }: { params: Promise<{ id: st
                 <div className="flex items-center gap-3">
                   {(state === "question" || state === "recording") && (
                     <>
-                      {isRecording ? (
+                      {voiceSupported && !isRecording && (
+                        <button
+                          onClick={() => setTypingMode((t) => !t)}
+                          className="text-slate-500 hover:text-foreground text-sm transition-colors"
+                        >
+                          {typingMode ? "Use voice" : "Type instead"}
+                        </button>
+                      )}
+                      {typingMode || !voiceSupported ? (
+                        <Button onClick={submitTypedAnswer} size="lg" className="px-8" disabled={!transcript.trim()}>
+                          Submit answer
+                        </Button>
+                      ) : isRecording ? (
                         <Button onClick={stopRecording} variant="danger" size="lg" className="px-8">
                           <MicOff size={18} />
-                          Stop & submit
+                          Stop &amp; submit
                         </Button>
                       ) : (
                         <Button onClick={startRecording} size="lg" className="px-8">
                           <Mic size={18} />
-                          {voiceSupported ? "Start recording" : "Submit answer"}
+                          Start recording
                         </Button>
                       )}
                     </>
