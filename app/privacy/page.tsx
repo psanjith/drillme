@@ -19,7 +19,8 @@ export default function PrivacyPage() {
             <p className="mb-2">We collect the following information when you use DrillMe:</p>
             <ul className="list-disc list-inside space-y-1 text-slate-400">
               <li><strong className="text-slate-300">Account data:</strong> name, email address, and password (hashed)</li>
-              <li><strong className="text-slate-300">Interview data:</strong> your spoken and typed responses during practice sessions</li>
+              <li><strong className="text-slate-300">Your inputs:</strong> the answers you speak or type during practice, and any job descriptions you paste in</li>
+              <li><strong className="text-slate-300">AI-generated content:</strong> the questions, scores, and feedback the AI produces from your inputs, stored with your sessions</li>
               <li><strong className="text-slate-300">Usage data:</strong> session history, scores, and progress metrics</li>
               <li><strong className="text-slate-300">Payment data:</strong> handled entirely by Stripe — we never see your card details</li>
             </ul>
@@ -38,8 +39,14 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-foreground font-semibold text-base mb-3">3. AI Processing</h2>
-            <p>Your interview responses are sent to third-party AI providers (Groq / Meta Llama) for question generation and evaluation. These providers process data under their own privacy policies. We do not share your name or email with AI providers — only the text content of your responses.</p>
+            <h2 className="text-foreground font-semibold text-base mb-3">3. AI Processing &amp; Voice Input</h2>
+            <p className="mb-3">DrillMe is an AI-powered product, so here is exactly how your inputs and AI outputs are handled:</p>
+            <ul className="list-disc list-inside space-y-2 text-slate-400">
+              <li><strong className="text-slate-300">What we send to the AI:</strong> the text of your answers, any job descriptions you paste, and related session context are sent to our AI provider (Groq, running Meta&apos;s Llama models) to generate questions, follow-ups, scores, and feedback. We do <strong className="text-slate-300">not</strong> send your name, email, or payment details.</li>
+              <li><strong className="text-slate-300">No model training:</strong> our AI provider does not use data submitted through its API to train its models, and DrillMe does not train any AI models on your data. Your inputs are used only to generate your own results.</li>
+              <li><strong className="text-slate-300">AI-generated outputs:</strong> questions, scores, and feedback are produced by AI, may contain errors, and are for practice only (see our Terms). They are stored with your account so you can track progress, and you can delete them at any time.</li>
+              <li><strong className="text-slate-300">Voice input:</strong> when you answer by speaking, transcription is performed by your web browser&apos;s built-in speech recognition. Some browsers (e.g. Google Chrome) transmit the audio to the browser vendor&apos;s servers to convert it to text, governed by that vendor&apos;s privacy policy — not ours. DrillMe receives only the resulting text transcript; we do not record or store raw audio.</li>
+            </ul>
           </section>
 
           <section>
@@ -66,7 +73,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="text-foreground font-semibold text-base mb-3">7. Third-Party Services</h2>
-            <p>DrillMe uses the following third-party services: Supabase (auth + database), Stripe (payments), Groq (AI inference), and Cloudflare (hosting). Each operates under their own privacy policies.</p>
+            <p>DrillMe uses the following third-party services: Supabase (auth + database), Stripe (payments), Groq (AI inference), Vercel (hosting), and your web browser&apos;s speech-recognition service (voice transcription). Each operates under their own privacy policies.</p>
           </section>
 
           <section>
