@@ -19,7 +19,7 @@ const TYPES: { value: InterviewType; label: string; desc: string }[] = [
   { value: "technical", label: "Technical", desc: "DSA, System Design, Code" },
   { value: "behavioural", label: "Behavioural", desc: "Situational & culture" },
 ];
-const DURATIONS = [20, 35, 50];
+const DURATIONS = [5, 10, 20, 35, 50];
 const PANELLISTS: { value: PanellistPersona; label: string; desc: string }[] = [
   { value: "hiring_manager", label: "Hiring Manager", desc: "Impact & culture" },
   { value: "senior_engineer", label: "Senior Engineer", desc: "Technical depth" },
@@ -236,12 +236,12 @@ function InterviewSetupInner() {
 
           <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-xl p-5">
             <label className="text-sm font-medium text-slate-300 block mb-3">Duration</label>
-            <div className="flex gap-2">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
               {DURATIONS.map((d) => (
                 <button
                   key={d}
                   onClick={() => setForm((f) => ({ ...f, duration_minutes: d }))}
-                  className={`flex-1 py-2 rounded-lg border text-sm transition-all ${
+                  className={`py-2 rounded-lg border text-sm transition-all ${
                     form.duration_minutes === d
                       ? "border-blue-500 bg-blue-500/10 text-foreground font-medium"
                       : "border-[var(--card-border)] text-slate-400 hover:border-slate-500"
