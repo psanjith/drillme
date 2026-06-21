@@ -53,6 +53,7 @@ export interface QuestionFeedback {
   gaps: string[];
   top_answer_additions: string;
   optimal_framework_summary: string;
+  weakness_tags?: { tag: string; category: string }[];
 }
 
 export interface SessionQuestion {

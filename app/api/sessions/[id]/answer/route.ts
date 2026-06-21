@@ -58,7 +58,9 @@ export async function POST(
       .from("session_questions")
       .update({
         scores: evaluation.scores,
-        feedback: evaluation.feedback,
+        // Nest weakness_tags inside feedback so the complete route can read
+        // them when building the weakness profile.
+        feedback: { ...evaluation.feedback, weakness_tags: evaluation.weakness_tags ?? [] },
       })
       .eq("id", question_id);
 
