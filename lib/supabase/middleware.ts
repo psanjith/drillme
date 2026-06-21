@@ -31,7 +31,7 @@ export async function updateSession(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  const publicPaths = ["/login", "/signup", "/", "/onboarding"];
+  const publicPaths = ["/login", "/signup", "/", "/onboarding", "/terms", "/privacy", "/forgot-password"];
   const isPublic =
     publicPaths.includes(pathname) ||
     pathname.startsWith("/auth/") ||
