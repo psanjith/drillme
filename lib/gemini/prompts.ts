@@ -304,12 +304,18 @@ ${JSON.stringify(currentProfile.map((w) => ({ tag: w.tag, category: w.category, 
 New weaknesses detected in this session:
 ${JSON.stringify(sessionFindings, null, 2)}
 
-For each weakness found:
+CRITICAL — avoid duplicates:
+- A finding is "the same weakness" as an existing profile entry if it means the same thing, even when worded differently (e.g. "DP" = "Dynamic Programming", "communication" = "Communication clarity", "STAR method" = "Behavioural structure").
+- When a finding matches an existing entry, you MUST reuse that entry's EXACT tag string (copy it verbatim) and set is_new=false. Do NOT create a near-duplicate with different wording or casing.
+- Only set is_new=true for a genuinely new weakness not already in the profile.
+- Use a clean, canonical Title Case tag name for new weaknesses (e.g. "Dynamic Programming", not "dp" or "dynamic-programming"). Merge findings that are the same weakness into one entry.
+
+For each weakness:
 - If it already exists in the profile: increase severity by 1-2 (max 10)
 - If it's new: start at severity 3
 - If a previously known weakness was NOT found in this session: decrease severity by 0.5
 
-Return JSON array:
+Return JSON array (one entry per distinct weakness):
 [
   {
     "tag": "weakness tag",

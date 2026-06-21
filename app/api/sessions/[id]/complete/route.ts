@@ -92,8 +92,23 @@ export async function POST(
           userId: user.id,
         });
 
+        // Normalize tags for matching so casing/punctuation/spacing variants
+        // ("Dynamic-Programming", "dynamic programming") merge into one entry.
+        const normalize = (t: string) =>
+          (t || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+
+        // Look up existing weaknesses by their normalized tag.
+        type WRow = { id: string; tag: string; severity: number; occurrence_count: number };
+        const byNorm = new Map<string, WRow>();
+        for (const w of (currentProfile || []) as WRow[]) byNorm.set(normalize(w.tag), w);
+
+        const seen = new Set<string>();
         for (const update of updates) {
-          const existing = (currentProfile || []).find((w) => w.tag === update.tag);
+          const key = normalize(update.tag);
+          if (!key || seen.has(key)) continue; // skip blanks + duplicates within this batch
+          seen.add(key);
+
+          const existing = byNorm.get(key);
           if (existing) {
             const newSeverity = Math.max(0, Math.min(10, existing.severity + update.severity_delta));
             const trend =
@@ -110,7 +125,7 @@ export async function POST(
           } else if (update.is_new) {
             await supabase.from("weakness_profile").insert({
               user_id: user.id,
-              tag: update.tag,
+              tag: update.tag.trim(),
               category: update.category,
               severity: 3,
               occurrence_count: 1,
