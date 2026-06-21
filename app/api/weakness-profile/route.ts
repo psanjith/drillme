@@ -13,9 +13,16 @@ export async function GET() {
       .from("weakness_profile")
       .select("*")
       .eq("user_id", user.id)
+      .gt("severity", 0) // hide fully-resolved weaknesses
       .order("severity", { ascending: false });
 
-    const recommendations = await generateDrillRecommendations(profile || []);
+    // AI recommendations are non-essential — never let an AI hiccup blank the page.
+    let recommendations: string[] = [];
+    try {
+      recommendations = await generateDrillRecommendations(profile || []);
+    } catch (err) {
+      console.error("Drill recommendations unavailable (non-fatal):", err);
+    }
 
     return NextResponse.json({ profile: profile || [], recommendations });
   } catch (err) {
