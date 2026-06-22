@@ -50,5 +50,13 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Prevent authenticated pages from being served from the browser's back/forward
+  // cache (bfcache). Without this, hitting "back" after sign-out shows the cached
+  // dashboard without re-checking auth. no-store disables bfcache, so back forces
+  // a fresh request → middleware redirects to /login when there's no session.
+  if (!isPublic) {
+    supabaseResponse.headers.set("Cache-Control", "no-store, max-age=0, must-revalidate");
+  }
+
   return supabaseResponse;
 }
