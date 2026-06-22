@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -13,6 +13,38 @@ export default function UpdatePasswordPage() {
   const [confirm, setConfirm] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [ready, setReady] = useState(false);
+  const [linkValid, setLinkValid] = useState(true);
+
+  // Establish a session from the recovery link before allowing a password
+  // change. The reset email redirects here with a `?code=` (or an error);
+  // without exchanging it, updateUser() fails with "Auth session missing!".
+  useEffect(() => {
+    const supabase = createClient();
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const errorDescription = params.get("error_description");
+
+    if (errorDescription) {
+      setError("This reset link is invalid or has expired. Please request a new one.");
+      setLinkValid(false);
+      setReady(true);
+      return;
+    }
+
+    if (code) {
+      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+        if (error) {
+          setError("This reset link is invalid or has expired. Please request a new one.");
+          setLinkValid(false);
+        }
+        setReady(true);
+      });
+    } else {
+      // No code in URL — rely on any session already detected, or surface on submit.
+      setReady(true);
+    }
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -77,16 +109,22 @@ export default function UpdatePasswordPage() {
               </div>
             )}
 
-            <Button type="submit" loading={loading} className="w-full mt-1">
-              Update password
+            <Button type="submit" loading={loading || !ready} disabled={!linkValid} className="w-full mt-1">
+              {ready ? "Update password" : "Verifying reset link…"}
             </Button>
           </form>
         </div>
 
         <p className="text-center text-slate-500 text-sm mt-6">
-          <Link href="/login" className="text-blue-400 hover:text-blue-300">
-            Back to sign in
-          </Link>
+          {linkValid ? (
+            <Link href="/login" className="text-blue-400 hover:text-blue-300">
+              Back to sign in
+            </Link>
+          ) : (
+            <Link href="/forgot-password" className="text-blue-400 hover:text-blue-300">
+              Request a new reset link
+            </Link>
+          )}
         </p>
       </div>
     </div>
