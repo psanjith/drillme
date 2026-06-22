@@ -128,6 +128,42 @@ export default function LandingPage() {
           title="Simple, honest pricing"
           description="Start free. Upgrade when you're ready to go all in."
         />
+
+        {/* About us */}
+        <section className="border-t border-[var(--card-border)] px-6 py-20">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-blue-400 text-xs font-semibold tracking-[0.2em] uppercase mb-3 text-center">Our story</p>
+            <h2 className="text-3xl font-bold text-foreground mb-8 text-center leading-tight">
+              We built DrillMe because<br className="hidden sm:block" /> interview prep is broken
+            </h2>
+
+            <div className="space-y-5 text-slate-400 text-base leading-relaxed">
+              <p>
+                One of us bombed an interview once — not because we weren&apos;t qualified, but because we
+                weren&apos;t prepared. Stumbling over questions we should have nailed, walking out knowing we&apos;d
+                let ourselves down. And the worst part? Not even knowing what went wrong until it was too late.
+              </p>
+              <p>
+                That experience stuck with us. Most people <span className="text-slate-300">consume content</span> about
+                interviews — tips, articles, videos — instead of actually <span className="text-slate-300">practicing</span> them.
+                Reading about interviews doesn&apos;t prepare you for the pressure of being in one.
+              </p>
+              <p>
+                So we built DrillMe: an AI interview coach that actually knows the job you&apos;re applying for.
+                Paste in any job description, get interviewed out loud by AI tailored to that exact role, then see
+                your score and a breakdown of your weaknesses — and drill those weak spots right inside the app.
+                No generic questions. No guessing. Just honest, targeted feedback so you walk in ready.
+              </p>
+            </div>
+
+            <div className="mt-10 pt-8 border-t border-[var(--card-border)] flex flex-col sm:flex-row items-center justify-center gap-x-3 gap-y-1 text-center">
+              <span className="text-slate-500 text-sm">Built by</span>
+              <span className="text-foreground text-sm font-medium">Prakul Sanjith Selvakumar</span>
+              <span className="text-slate-600 hidden sm:inline">·</span>
+              <span className="text-foreground text-sm font-medium">Pavitarpartap Boparai</span>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="border-t border-[var(--card-border)] px-6 py-4 text-xs text-slate-600">
