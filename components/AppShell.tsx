@@ -43,18 +43,31 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       .catch(() => setIsPro(false));
   }, []);
 
-  // Guard against the browser back/forward cache (bfcache) showing this
-  // authenticated page after sign-out. On a bfcache restore the page keeps its
-  // old in-memory Supabase client whose access-token JWT is still valid for up
-  // to an hour, so a client-side getUser() check falsely passes. Instead, force
-  // a full reload on bfcache restore: that re-runs middleware, which reads the
-  // cookies (cleared on sign-out) and redirects to /login when there's no session.
+  // Guard against the browser back/forward cache showing this authenticated
+  // page after sign-out. `document.cookie` is read live (not snapshotted with
+  // the cached page), and the Supabase auth cookie is cleared on sign-out — so
+  // if it's missing when the page is shown/refocused, the user is signed out
+  // and we replace the history entry with /login (so Back can't return here).
   useEffect(() => {
-    const onPageShow = (e: PageTransitionEvent) => {
-      if (e.persisted) window.location.reload();
+    const bounceIfSignedOut = () => {
+      const hasSession = document.cookie
+        .split(";")
+        .some((c) => {
+          const name = c.trim();
+          return name.startsWith("sb-") && name.includes("auth-token");
+        });
+      if (!hasSession) window.location.replace("/login");
+    };
+    const onPageShow = () => bounceIfSignedOut();
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") bounceIfSignedOut();
     };
     window.addEventListener("pageshow", onPageShow);
-    return () => window.removeEventListener("pageshow", onPageShow);
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      window.removeEventListener("pageshow", onPageShow);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, []);
 
   async function handleLogout() {
