@@ -13,9 +13,12 @@ export async function POST(request: Request) {
     if (isPro) return NextResponse.json({ error: "Already subscribed" }, { status: 400 });
 
     const { plan } = await request.json().catch(() => ({ plan: "monthly" }));
-    const priceId = plan === "annual"
-      ? process.env.STRIPE_PRICE_ID_ANNUAL!
-      : process.env.STRIPE_PRICE_ID!;
+    // biweekly = $14 every 2 weeks, monthly = $25/month.
+    // Fall back to the previous env var names so checkout keeps working until
+    // the new STRIPE_PRICE_ID_BIWEEKLY / STRIPE_PRICE_ID_MONTHLY are set.
+    const priceId = plan === "biweekly"
+      ? (process.env.STRIPE_PRICE_ID_BIWEEKLY || process.env.STRIPE_PRICE_ID_ANNUAL!)
+      : (process.env.STRIPE_PRICE_ID_MONTHLY || process.env.STRIPE_PRICE_ID!);
 
     const origin = request.headers.get("origin") || "http://localhost:3000";
     const customerId = await getOrCreateCustomer(user.email!, user.id, stripeCustomerId);

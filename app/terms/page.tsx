@@ -31,7 +31,7 @@ export default function TermsPage() {
 
           <section>
             <h2 className="text-foreground font-semibold text-base mb-3">4. Subscriptions and Billing</h2>
-            <p>DrillMe offers a free tier and a paid Pro subscription. Paid subscriptions are billed monthly. You may cancel at any time; access continues until the end of the current billing period. All payments are processed securely by Stripe. We do not store your payment card details.</p>
+            <p>DrillMe offers a free tier and a paid Pro subscription, billed bi-weekly or monthly depending on the plan you choose. You may cancel at any time; access continues until the end of the current billing period. All payments are processed securely by Stripe. We do not store your payment card details.</p>
           </section>
 
           <section>

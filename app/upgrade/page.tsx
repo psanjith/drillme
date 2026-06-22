@@ -25,7 +25,7 @@ export default function UpgradePage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [cycle, setCycle] = useState<"monthly" | "annual">("annual");
+  const [cycle, setCycle] = useState<"biweekly" | "monthly">("monthly");
 
   async function handleUpgrade() {
     setLoading(true);
@@ -60,7 +60,7 @@ export default function UpgradePage() {
         {/* Billing cycle toggle */}
         <div className="flex items-center justify-center mb-8">
           <div className="inline-flex items-center bg-[var(--card)] border border-[var(--card-border)] rounded-lg p-1">
-            {(["monthly", "annual"] as const).map((c) => (
+            {(["biweekly", "monthly"] as const).map((c) => (
               <button
                 key={c}
                 onClick={() => setCycle(c)}
@@ -68,9 +68,9 @@ export default function UpgradePage() {
                   cycle === c ? "bg-blue-500 text-white" : "text-slate-400 hover:text-slate-200"
                 }`}
               >
-                {c === "monthly" ? "Monthly" : "Annual"}
-                {c === "annual" && (
-                  <span className={`ml-2 text-xs ${cycle === c ? "text-white/80" : "text-green-400"}`}>2 months free</span>
+                {c === "biweekly" ? "Bi-weekly" : "Monthly"}
+                {c === "monthly" && (
+                  <span className={`ml-2 text-xs ${cycle === c ? "text-white/80" : "text-green-400"}`}>best value</span>
                 )}
               </button>
             ))}
@@ -99,11 +99,11 @@ export default function UpgradePage() {
             </div>
             <p className="text-blue-400 text-sm font-medium mb-1">Pro</p>
             <div className="flex items-baseline gap-1 mb-1">
-              <p className="text-3xl font-bold text-foreground">{cycle === "annual" ? "$150" : "$15"}</p>
-              <p className="text-slate-400 text-sm">{cycle === "annual" ? "/year" : "/month"}</p>
+              <p className="text-3xl font-bold text-foreground">{cycle === "biweekly" ? "$14" : "$25"}</p>
+              <p className="text-slate-400 text-sm">{cycle === "biweekly" ? "/2 weeks" : "/month"}</p>
             </div>
             <p className="text-xs text-slate-500 mb-5 h-4">
-              {cycle === "annual" ? "$12.50/mo, billed yearly" : " "}
+              {cycle === "biweekly" ? "Billed every 2 weeks" : "Billed monthly · best value"}
             </p>
             <ul className="space-y-3">
               {PRO_FEATURES.map((f) => (
@@ -129,7 +129,7 @@ export default function UpgradePage() {
         >
           {loading
             ? "Redirecting to checkout..."
-            : cycle === "annual" ? "Upgrade to Pro — $150/year" : "Upgrade to Pro — $15/month"}
+            : cycle === "biweekly" ? "Upgrade to Pro — $14 / 2 weeks" : "Upgrade to Pro — $25 / month"}
         </button>
 
         <p className="text-center text-slate-500 text-xs mt-4">
