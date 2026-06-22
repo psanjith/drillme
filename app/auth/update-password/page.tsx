@@ -16,34 +16,18 @@ export default function UpdatePasswordPage() {
   const [ready, setReady] = useState(false);
   const [linkValid, setLinkValid] = useState(true);
 
-  // Establish a session from the recovery link before allowing a password
-  // change. The reset email redirects here with a `?code=` (or an error);
-  // without exchanging it, updateUser() fails with "Auth session missing!".
+  // The recovery code is exchanged server-side in /auth/callback, which lands
+  // the user here with an active session. Confirm that session exists before
+  // allowing a password change; if it's missing the link was invalid/expired.
   useEffect(() => {
     const supabase = createClient();
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    const errorDescription = params.get("error_description");
-
-    if (errorDescription) {
-      setError("This reset link is invalid or has expired. Please request a new one.");
-      setLinkValid(false);
+    supabase.auth.getUser().then(({ data, error }) => {
+      if (error || !data.user) {
+        setError("This reset link is invalid or has expired. Please request a new one.");
+        setLinkValid(false);
+      }
       setReady(true);
-      return;
-    }
-
-    if (code) {
-      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
-        if (error) {
-          setError("This reset link is invalid or has expired. Please request a new one.");
-          setLinkValid(false);
-        }
-        setReady(true);
-      });
-    } else {
-      // No code in URL — rely on any session already detected, or surface on submit.
-      setReady(true);
-    }
+    });
   }, []);
 
   async function handleSubmit(e: React.FormEvent) {

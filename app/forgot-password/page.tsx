@@ -19,7 +19,10 @@ export default function ForgotPasswordPage() {
 
     const supabase = createClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/update-password`,
+      // Route through the server-side callback, which exchanges the recovery
+      // code for a session once (reading the PKCE verifier cookie) and then
+      // lands the user on the update-password page with an active session.
+      redirectTo: `${window.location.origin}/auth/callback?next=/auth/update-password`,
     });
 
     if (error) {
