@@ -43,6 +43,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       .catch(() => setIsPro(false));
   }, []);
 
+  // Guard against the browser back/forward cache showing this authenticated
+  // page after sign-out. `pageshow` fires when a page is restored from bfcache
+  // (where React doesn't remount), so we re-verify the session there and also
+  // on mount; if there's no user, bounce to /login.
+  useEffect(() => {
+    const supabase = createClient();
+    const verifySession = async () => {
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) window.location.href = "/login";
+    };
+    verifySession();
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) verifySession();
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, []);
+
   async function handleLogout() {
     const supabase = createClient();
     await supabase.auth.signOut();
