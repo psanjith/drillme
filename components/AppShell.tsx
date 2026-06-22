@@ -43,19 +43,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       .catch(() => setIsPro(false));
   }, []);
 
-  // Guard against the browser back/forward cache showing this authenticated
-  // page after sign-out. `pageshow` fires when a page is restored from bfcache
-  // (where React doesn't remount), so we re-verify the session there and also
-  // on mount; if there's no user, bounce to /login.
+  // Guard against the browser back/forward cache (bfcache) showing this
+  // authenticated page after sign-out. On a bfcache restore the page keeps its
+  // old in-memory Supabase client whose access-token JWT is still valid for up
+  // to an hour, so a client-side getUser() check falsely passes. Instead, force
+  // a full reload on bfcache restore: that re-runs middleware, which reads the
+  // cookies (cleared on sign-out) and redirects to /login when there's no session.
   useEffect(() => {
-    const supabase = createClient();
-    const verifySession = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (!data.user) window.location.href = "/login";
-    };
-    verifySession();
     const onPageShow = (e: PageTransitionEvent) => {
-      if (e.persisted) verifySession();
+      if (e.persisted) window.location.reload();
     };
     window.addEventListener("pageshow", onPageShow);
     return () => window.removeEventListener("pageshow", onPageShow);
