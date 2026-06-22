@@ -199,7 +199,9 @@ export default function LandingPage() {
               </p>
               <p>
                 That experience stuck with us. Most people <span className="text-slate-300">consume content</span> about
-                interviews — tips, articles, videos — instead of actually <span className="text-slate-300">practicing </span> them.
+                interviews — tips, articles, videos — instead of actually{" "}
+                <span className="text-slate-300">practicing</span>{" "}
+                them.
                 Reading about interviews doesn&apos;t prepare you for the pressure of being in one.
               </p>
               <p>
