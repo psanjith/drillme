@@ -123,6 +123,60 @@ export default function LandingPage() {
           </div>
         </div>
 
+        {/* How it works */}
+        <section className="border-t border-[var(--card-border)] px-6 py-20">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="text-blue-400 text-xs font-semibold tracking-[0.2em] uppercase mb-3">How it works</p>
+              <h2 className="text-3xl font-bold text-foreground leading-tight">From job description to job-ready</h2>
+              <p className="text-slate-400 mt-3 max-w-xl mx-auto">
+                DrillMe turns any job posting into a realistic mock interview, then shows you exactly where to improve — and lets you practice it.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  n: "1",
+                  title: "Paste the job description",
+                  desc: "Drop in any posting from Indeed, LinkedIn, or anywhere. DrillMe reads the role and tailors every question to it — no generic question dumps.",
+                },
+                {
+                  n: "2",
+                  title: "Get interviewed, out loud",
+                  desc: "A panel of AI interviewers asks real questions and follows up in real time — so you practice under pressure, the way the actual interview feels.",
+                },
+                {
+                  n: "3",
+                  title: "See your score & drill your gaps",
+                  desc: "Get a readiness score and a per-question breakdown of your strengths and weaknesses, then practice your weak spots right inside the app.",
+                },
+              ].map((step) => (
+                <div key={step.n} className="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl p-6">
+                  <div className="w-9 h-9 rounded-lg bg-blue-500/15 text-blue-400 font-semibold flex items-center justify-center mb-4">
+                    {step.n}
+                  </div>
+                  <h3 className="text-foreground font-semibold text-base mb-2">{step.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-12 grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {[
+                { stat: "Tailored", label: "Questions matched to the exact role you're applying for" },
+                { stat: "Honest", label: "Real scores and feedback — not vague encouragement" },
+                { stat: "Active", label: "Practice and improve, instead of just reading tips" },
+              ].map((b) => (
+                <div key={b.stat} className="text-center">
+                  <p className="text-blue-400 font-semibold text-sm mb-1">{b.stat}</p>
+                  <p className="text-slate-500 text-xs leading-relaxed">{b.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <PricingSection
           plans={PRICING_PLANS}
           title="Simple, honest pricing"
