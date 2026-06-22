@@ -211,13 +211,6 @@ export default function LandingPage() {
                 No generic questions. No guessing. Just honest, targeted feedback so you walk in ready.
               </p>
             </div>
-
-            <div className="mt-10 pt-8 border-t border-[var(--card-border)] flex flex-col sm:flex-row items-center justify-center gap-x-3 gap-y-1 text-center">
-              <span className="text-slate-500 text-sm">Built by</span>
-              <span className="text-foreground text-sm font-medium">Prakul Sanjith Selvakumar</span>
-              <span className="text-slate-600 hidden sm:inline">·</span>
-              <span className="text-foreground text-sm font-medium">Pavitarpartap Boparai</span>
-            </div>
           </div>
         </section>
       </main>
