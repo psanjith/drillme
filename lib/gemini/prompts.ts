@@ -103,6 +103,13 @@ export async function generateNextQuestion(params: {
     difficulty: q.difficulty,
   }));
 
+  const typeRule =
+    sessionContext.interview_type === "technical"
+      ? `This is a TECHNICAL interview. The question_type MUST be "technical" or "system_design". Do NOT ask behavioural questions under any circumstances.`
+      : sessionContext.interview_type === "behavioural"
+      ? `This is a BEHAVIOURAL interview. The question_type MUST be "behavioural". Do NOT ask technical or system_design questions under any circumstances.`
+      : `This is a MIXED interview. A balance of technical, system_design, and behavioural questions is appropriate.`;
+
   const prompt = `${PANELLIST_PERSONAS[panellist]}
 
 You are selecting the next interview question for a candidate.
@@ -114,13 +121,15 @@ Session context:
 - JD summary: ${sessionContext.jd_summary || "Not provided"}
 - Questions already asked: ${sessionContext.questions_asked.join("; ") || "None yet"}
 
+IMPORTANT — interview type constraint: ${typeRule}
+
 Candidate weakness profile (prioritise probing these areas):
 ${weaknessSummary}
 
 Available questions from question bank (you may select one or generate a new one):
 ${JSON.stringify(bankSample, null, 2)}
 
-Select the most appropriate next question. If selecting from the bank, use that question's text verbatim. If generating, create a targeted question.
+Select the most appropriate next question, respecting the interview type constraint above. If selecting from the bank, use that question's text verbatim. If generating, create a targeted question.
 
 Return JSON:
 {

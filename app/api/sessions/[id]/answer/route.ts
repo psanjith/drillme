@@ -109,9 +109,17 @@ export async function POST(
         .order("severity", { ascending: false })
         .limit(10);
 
+      const typeFilter =
+        session.interview_type === "technical"
+          ? ["technical", "system_design"]
+          : session.interview_type === "behavioural"
+          ? ["behavioural"]
+          : ["technical", "behavioural", "system_design"];
+
       const { data: questions } = await supabase
         .from("questions")
         .select("*")
+        .in("type", typeFilter)
         .limit(30);
 
       const panellists = session.panel_config?.panellists || ["hiring_manager", "senior_engineer", "peer_engineer"];
