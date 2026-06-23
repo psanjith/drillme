@@ -103,7 +103,7 @@ export default function UpgradePage() {
               <p className="text-slate-400 text-sm">{cycle === "biweekly" ? "/2 weeks" : "/month"}</p>
             </div>
             <p className="text-xs text-slate-500 mb-5 h-4">
-              {cycle === "biweekly" ? "Billed every 2 weeks" : "Billed monthly · best value"}
+              {cycle === "biweekly" ? "Billed every 2 weeks · CAD" : "Billed monthly · CAD · best value"}
             </p>
             <ul className="space-y-3">
               {PRO_FEATURES.map((f) => (
@@ -129,7 +129,7 @@ export default function UpgradePage() {
         >
           {loading
             ? "Redirecting to checkout..."
-            : cycle === "biweekly" ? "Upgrade to Pro — $14 / 2 weeks" : "Upgrade to Pro — $25 / month"}
+            : cycle === "biweekly" ? "Upgrade to Pro — $14 CAD / 2 weeks" : "Upgrade to Pro — $25 CAD / month"}
         </button>
 
         <p className="text-center text-slate-500 text-xs mt-4">

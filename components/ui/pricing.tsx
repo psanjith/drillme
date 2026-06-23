@@ -157,6 +157,8 @@ export function PricingSection({
             <PricingCard key={plan.name} plan={plan} index={index} />
           ))}
         </div>
+
+        <p className="text-center text-slate-500 text-xs mt-8">All prices in CAD.</p>
       </div>
     </div>
   );
@@ -193,7 +195,7 @@ function PricingCard({ plan, index }: { plan: PricingPlan; index: number }) {
           <span className="text-5xl font-bold tracking-tight text-foreground">
             <NumberFlow
               value={Number(plan.price)}
-              format={{ style: "currency", currency: "USD", minimumFractionDigits: 0 }}
+              format={{ style: "currency", currency: "CAD", currencyDisplay: "narrowSymbol", minimumFractionDigits: 0 }}
               className="tabular-nums"
             />
           </span>
